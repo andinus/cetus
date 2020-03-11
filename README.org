@@ -6,8 +6,7 @@ Cetus is a wallpaper setting tool written in Go. This is a work in-progress.
 ** Supports various Image of the Day services
 There are several Image of the Day services on the web, cetus will pull the
 latest image & set it as wallpaper.
-*** TODO NASA Image of the Day
-*** TODO Bing Image of the Day
+*** TODO [[http://apod.nasa.gov/apod/astropix.html][Astronomy Picture of the Day]]
 ** DONE Set given wallpaper
 Takes a path as input & sets it as wallpaper.
 
