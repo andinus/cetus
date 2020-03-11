@@ -11,6 +11,7 @@ There are several Image of the Day services on the web, cetus will pull the
 latest image & set it as wallpaper.
 
 - [X] [[http://apod.nasa.gov/apod/astropix.html][Astronomy Picture of the Day]]
+- [X] Bing Photo of the Day
 
 * Examples
 ** Image of the Day

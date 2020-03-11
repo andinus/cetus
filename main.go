@@ -37,6 +37,9 @@ func main() {
 		apod       bool
 		apodAPI    string
 		apodAPIKey string
+
+		bpod    bool
+		bpodAPI string
 	)
 
 	// Parse flags passed to program
@@ -45,6 +48,9 @@ func main() {
 	flag.BoolVar(&apod, "apod", false, "Set Astronomy Picture of the Day as wallpaper")
 	flag.StringVar(&apodAPI, "apod-api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apodAPIKey, "apod-api-key", "DEMO_KEY", "APOD API Key")
+
+	flag.BoolVar(&bpod, "bpod", false, "Set Bing Photo of the Day as wallpaper")
+	flag.StringVar(&bpodAPI, "bpod-api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API URL")
 
 	flag.DurationVar(&timeout, "timeout", 16, "Timeout for http client")
 
@@ -56,12 +62,21 @@ func main() {
 		return
 	}
 
-	if apod != false {
+	if apod {
 		apodI := make(map[string]string)
 		apodI["api"] = apodAPI
 		apodI["apiKey"] = apodAPIKey
 
 		err = setWallFromAPOD(apodI)
+		errChk(err)
+		return
+	}
+
+	if bpod {
+		bpodI := make(map[string]string)
+		bpodI["api"] = bpodAPI
+
+		err = setWallFromBPOD(bpodI)
 		errChk(err)
 		return
 	}
@@ -78,6 +93,57 @@ func setWall(imgPath string) error {
 	fmt.Printf("Path to set as Wallpaper: %s\n", imgPath)
 
 	err = exec.Command(feh, "--bg-fill", imgPath).Run()
+	return err
+}
+
+// Get url of Bing Photo of the Day & pass it to setWall()
+func setWallFromBPOD(bpodI map[string]string) error {
+	type Images struct {
+		StartDate     string `json:"startdate"`
+		FullStartDate string `json:"fullstartdate"`
+		EndDate       string `json:"enddate"`
+		URL           string `json:"url"`
+		URLBase       string `json:"urlbase"`
+		Copyright     string `json:"copyright"`
+		CopyrightLink string `json:"copyrightlink"`
+		Title         string `json:"title"`
+		Hsh           string `json:"hsh"`
+	}
+
+	type bpodRes struct {
+		Image []Images `json:"images"`
+	}
+
+	bpodNow := bpodRes{}
+
+	req, err := http.NewRequest(http.MethodGet, bpodI["api"], nil)
+	if err != nil {
+		return err
+	}
+	q := req.URL.Query()
+	q.Add("format", "js")
+	q.Add("n", "1")
+	req.URL.RawQuery = q.Encode()
+
+	res, err := getRes(req)
+	if err != nil {
+		fmt.Printf("Error: GET %s\n", bpodI["api"])
+		return err
+	}
+	defer res.Body.Close()
+
+	apiBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal([]byte(apiBody), &bpodNow)
+	if err != nil {
+		return err
+	}
+
+	// Set Bing Photo of the Day as wallpaper
+	err = setWall(fmt.Sprintf("%s%s", "https://www.bing.com", bpodNow.Image[0].URL))
 	return err
 }
 
