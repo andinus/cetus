@@ -4,3 +4,4 @@ Cetus is a wallpaper setting tool written in Go. This is a work in-progress.
 
 * Features
 ** TODO Set given wallpaper
+Takes a path as input & sets it as wallpaper.
