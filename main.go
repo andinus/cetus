@@ -14,6 +14,41 @@
 
 package main
 
-func main() {
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os/exec"
+)
 
+func main() {
+	var (
+		imgPath string
+		err     error
+	)
+
+	// Parse flags passed to program
+	flag.StringVar(&imgPath, "img-path", "", "Image to set as wallpaper")
+	flag.Parse()
+
+	if len(imgPath) > 0 {
+		err = setWall(imgPath)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+}
+
+func setWall(imgPath string) error {
+	var err error
+
+	feh, err := exec.LookPath("feh")
+	if err != nil {
+		fmt.Println("Error: feh is not in $PATH")
+		return err
+	}
+
+	err = exec.Command(feh, "--bg-fill", imgPath).Run()
+	return err
 }
