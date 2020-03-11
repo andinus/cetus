@@ -1,0 +1,6 @@
+#+TITLE: Cetus
+
+Cetus is a wallpaper setting tool written in Go. This is a work in-progress.
+
+* Features
+** TODO Set given wallpaper
