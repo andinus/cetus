@@ -3,8 +3,15 @@
 Cetus is a wallpaper setting tool written in Go. This is a work in-progress.
 
 * Dependency
-** [[https://feh.finalrewind.org/][feh]]
-Required to set the wallpaper.
+- [[https://feh.finalrewind.org/][feh]]
+
+* Features
+** Supports various Image of the Day services
+There are several Image of the Day services on the web, cetus will pull the
+latest image & set it as wallpaper.
+
+- [X] [[http://apod.nasa.gov/apod/astropix.html][Astronomy Picture of the Day]]
+
 * Examples
 ** Image of the Day
 *** Astronomy Picture of the Day
@@ -20,11 +27,3 @@ cetus -img-path=/path/to/img
 # Remote image as wallpaper
 cetus -img-path=http://127.0.0.1
 #+END_SRC
-
-* Features
-** Supports various Image of the Day services
-There are several Image of the Day services on the web, cetus will pull the
-latest image & set it as wallpaper.
-*** DONE [[http://apod.nasa.gov/apod/astropix.html][Astronomy Picture of the Day]]
-** DONE Set given wallpaper
-Takes a path as input & sets it as wallpaper.
