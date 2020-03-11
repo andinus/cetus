@@ -20,6 +20,10 @@ latest image & set it as wallpaper.
 cetus -apod -apod-api=https://api.nasa.gov/planetary/apod \
       -apod-api-key=DEMO_KEY
 #+END_SRC
+*** Bing Photo of the Day
+#+BEGIN_SRC sh
+cetus -bpod
+#+END_SRC
 ** Set given wallpaper
 #+BEGIN_SRC sh
 # Local image as wallpaper
