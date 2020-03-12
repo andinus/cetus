@@ -83,3 +83,6 @@ cetus -src=random -wall=random
 
 cetus # This is same as above
 #+END_SRC
+* Uses
+- on system startup for new wallpaper at every startup
+- as a cron job to change wallpaper at set intervals
