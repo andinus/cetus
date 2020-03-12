@@ -4,10 +4,14 @@ Cetus is a wallpaper tool written in Go. It can set wallpapers from various
 sources. Default behaviour is to set a random wallpaper.
 
 * Defaults
-| flag | var  | default                                   |
-|------+------+-------------------------------------------|
-| mode | mode | random (daily when random is unavailable) |
-| src  | src  | random                                    |
+| flag   | var    | default                                   |
+|--------+--------+-------------------------------------------|
+| mode   | mode   | random (daily when random is unavailable) |
+| src    | src    | random                                    |
+
+Currently only Unsplash Source random is supported for width, height
+| width  | width  | 1920 |
+| height | height | 1080 |
 ** Astronomy Picture of the Day
 | flag         | var        | default                             |
 |--------------+------------+-------------------------------------|
@@ -27,7 +31,7 @@ sources. Default behaviour is to set a random wallpaper.
 - [[https://feh.finalrewind.org/][feh]]
 * Features
 - Set Daily, Weekly or Random wallpaper
-
+- Supports multiple sources
 * Examples
 ** Daily wallpaper
 *** from Astronomy Picture of the Day
@@ -62,7 +66,7 @@ cetus -src=bpod # This is same as above
 #+END_SRC
 *** from Unsplash Source
 #+BEGIN_SRC sh
-cetus -src=unsplash -mode=random
+cetus -src=unsplash -mode=random -width 1920 -height 1080
 
 cetus -src=unsplash # This is same as above
 #+END_SRC
