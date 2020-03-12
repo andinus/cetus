@@ -3,9 +3,15 @@
 Cetus is a wallpaper tool written in Go. It can set wallpapers from various
 sources. Default behaviour is to set a random wallpaper.
 
+* Defaults
+| mode    | random |
+| src     | random |
+** Bing Photo of the Day
+| bpodAPI | https://www.bing.com/HPImageArchive.aspx |
+| bpodNum |                                       16 |
+
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
-
 * Features
 - Set Daily, Weekly or Random wallpaper
 
@@ -13,27 +19,43 @@ sources. Default behaviour is to set a random wallpaper.
 ** Daily wallpaper
 *** from Astronomy Picture of the Day
 #+BEGIN_SRC sh
-cetus -apod -daily
+cetus -src=apod -mode=daily
 #+END_SRC
 *** from Bing Photo of the Day
 #+BEGIN_SRC sh
-cetus -bpod -daily
+cetus -src=bpod -mode=daily
 #+END_SRC
-*** from Unsplash
+*** from Unsplash Source
 #+BEGIN_SRC sh
-cetus -unsplash -daily
+cetus -src=unsplash -mode=daily
 #+END_SRC
 *** from any service (choosen randomly)
 #+BEGIN_SRC sh
-cetus -daily
+cetus -src=random -mode=daily
+
+cetus -mode=daily # This is same as above
 #+END_SRC
 ** Weekly wallpaper
-*** from Unsplash
-#+BEGIN_SRC sh
-cetus -unsplash -weekly
+*** from Unsplash Source
+#+BEGIN_SRC shp
+cetus -src=unsplash -mode=weekly
 #+END_SRC
 ** Random wallpaper
-*** from Unsplash
+*** from Bing Photo of the Day
 #+BEGIN_SRC sh
-cetus -unsplash -random
+cetus -src=bpod -bpod-num 16 -mode=random # select from last 16 images
+
+cetus -src=bpod # This is same as above
+#+END_SRC
+*** from Unsplash Source
+#+BEGIN_SRC sh
+cetus -src=unsplash -mode=random
+
+cetus -src=unsplash # This is same as above
+#+END_SRC
+*** from any service (choosen randomly)
+#+BEGIN_SRC sh
+cetus -src=random -mode=random
+
+cetus # This is same as above
 #+END_SRC

@@ -20,84 +20,105 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"os/exec"
+	"strconv"
 	"time"
 )
 
 var (
-	err     error
 	timeout time.Duration
+
+	apodAPI     string
+	apodAPIKey  string
+	bpodAPI     string
+	bpodNum     int
+	unsplashAPI string
 )
 
 func main() {
+	rand.Seed(time.Now().Unix())
+
 	var (
+		err error
+
 		imgPath string
-
-		apod       bool
-		apodAPI    string
-		apodAPIKey string
-
-		bpod    bool
-		bpodAPI string
+		mode    string
+		src     string
+		srcArr  []string = []string{
+			"apod",
+			"bpod",
+			"unsplash",
+		}
 	)
 
 	// Parse flags passed to program
-	flag.StringVar(&imgPath, "img-path", "", "Image to set as wallpaper")
+	flag.StringVar(&src, "src", "random", "Source for the image")
+	flag.StringVar(&mode, "mode", "random", "Daily, Weekly or Random wallpaper")
 
-	flag.BoolVar(&apod, "apod", false, "Set Astronomy Picture of the Day as wallpaper")
 	flag.StringVar(&apodAPI, "apod-api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apodAPIKey, "apod-api-key", "DEMO_KEY", "APOD API Key")
-
-	flag.BoolVar(&bpod, "bpod", false, "Set Bing Photo of the Day as wallpaper")
 	flag.StringVar(&bpodAPI, "bpod-api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API URL")
-
+	flag.IntVar(&bpodNum, "bpod-num", 16, "BPOD Number of images to fetch")
 	flag.DurationVar(&timeout, "timeout", 16, "Timeout for http client")
-
 	flag.Parse()
 
-	if len(imgPath) > 0 {
-		err = setWall(imgPath)
-		errChk(err)
-		return
+	if src == "random" {
+		src = srcArr[rand.Intn(len(srcArr))]
 	}
 
-	if apod {
-		apodI := make(map[string]string)
-		apodI["api"] = apodAPI
-		apodI["apiKey"] = apodAPIKey
-
-		err = setWallFromAPOD(apodI)
-		errChk(err)
-		return
+	// Check if the source is known
+	if !contains(srcArr, src) {
+		log.Fatal("Error: Unknown Source")
 	}
 
-	if bpod {
-		bpodI := make(map[string]string)
-		bpodI["api"] = bpodAPI
+	imgPath, err = parseSrcAndGetPath(src, mode)
+	errChk(err)
 
-		err = setWallFromBPOD(bpodI)
-		errChk(err)
-		return
-	}
+	err = setWall(imgPath)
+	errChk(err)
 }
 
-// Calls feh to set the wallpaper
-func setWall(imgPath string) error {
-	feh, err := exec.LookPath("feh")
-	if err != nil {
-		fmt.Println("Error: feh is not in $PATH")
-		return err
+func contains(arr []string, str string) bool {
+	for _, i := range arr {
+		if i == str {
+			return true
+		}
 	}
-
-	fmt.Printf("Path to set as Wallpaper: %s\n", imgPath)
-
-	err = exec.Command(feh, "--bg-fill", imgPath).Run()
-	return err
+	return false
 }
 
-// Get url of Bing Photo of the Day & pass it to setWall()
-func setWallFromBPOD(bpodI map[string]string) error {
+// Gets image path from src
+func parseSrcAndGetPath(src string, mode string) (string, error) {
+	var err error
+	var imgPath string
+
+	switch src {
+	case "apod":
+		fmt.Println("Astronomy Picture of the Day")
+		imgPath, err = getPathAPOD(mode)
+	case "bpod":
+		fmt.Println("Bing Photo of the Day")
+		imgPath, err = getPathBPOD(mode)
+	case "unsplash":
+		fmt.Println("Unsplash Source")
+		imgPath, err = getPathUnsplash(mode)
+	}
+
+	return imgPath, err
+}
+
+func getPathAPOD(mode string) (string, error) {
+	var err error
+	var imgPath string
+	return imgPath, err
+}
+
+func getPathBPOD(mode string) (string, error) {
+	var err error
+	var imgPath string
+
 	type Images struct {
 		StartDate     string `json:"startdate"`
 		FullStartDate string `json:"fullstartdate"`
@@ -116,34 +137,65 @@ func setWallFromBPOD(bpodI map[string]string) error {
 
 	bpodNow := bpodRes{}
 
-	req, err := http.NewRequest(http.MethodGet, bpodI["api"], nil)
+	req, err := http.NewRequest(http.MethodGet, bpodAPI, nil)
 	if err != nil {
-		return err
+		return "", err
 	}
 	q := req.URL.Query()
 	q.Add("format", "js")
-	q.Add("n", "1")
+
+	switch mode {
+	case "daily":
+		q.Add("n", "1")
+	case "random":
+		// Fetches 16 images (only info) & chooses a random image
+		q.Add("n", strconv.Itoa(bpodNum))
+	default:
+		return "", fmt.Errorf("Error: Unknown Mode")
+	}
+
 	req.URL.RawQuery = q.Encode()
 
 	res, err := getRes(req)
 	if err != nil {
-		fmt.Printf("Error: GET %s\n", bpodI["api"])
-		return err
+		return "", err
 	}
 	defer res.Body.Close()
 
 	apiBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = json.Unmarshal([]byte(apiBody), &bpodNow)
 	if err != nil {
+		return "", err
+	}
+
+	// Choose a random image
+	var i int = rand.Intn(len(bpodNow.Image))
+	imgPath = fmt.Sprintf("%s%s", "https://www.bing.com", bpodNow.Image[i].URL)
+
+	return imgPath, err
+}
+
+func getPathUnsplash(mode string) (string, error) {
+	var err error
+	var imgPath string
+	return imgPath, err
+}
+
+// Calls feh to set the wallpaper
+func setWall(imgPath string) error {
+	feh, err := exec.LookPath("feh")
+	if err != nil {
+		fmt.Println("Error: feh is not in $PATH")
 		return err
 	}
 
-	// Set Bing Photo of the Day as wallpaper
-	err = setWall(fmt.Sprintf("%s%s", "https://www.bing.com", bpodNow.Image[0].URL))
+	fmt.Printf("Path to set as Wallpaper: %s\n", imgPath)
+
+	err = exec.Command(feh, "--bg-fill", imgPath).Run()
 	return err
 }
 
