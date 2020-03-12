@@ -4,12 +4,25 @@ Cetus is a wallpaper tool written in Go. It can set wallpapers from various
 sources. Default behaviour is to set a random wallpaper.
 
 * Defaults
-| mode    | random |
-| src     | random |
+| flag | var  | default                                   |
+|------+------+-------------------------------------------|
+| mode | mode | random (daily when random is unavailable) |
+| src  | src  | random                                    |
+** Astronomy Picture of the Day
+| flag         | var        | default                             |
+|--------------+------------+-------------------------------------|
+| apod-api     | apodAPI    | https://api.nasa.gov/planetary/apod |
+| apod-api-key | apodAPIKey | DEMO_KEY                            |
+| mode         | mode       | daily                               |
 ** Bing Photo of the Day
-| bpodAPI | https://www.bing.com/HPImageArchive.aspx |
-| bpodNum |                                       16 |
-
+| flag     | var     | default                                  |
+|----------+---------+------------------------------------------|
+| bpod-api | bpodAPI | https://www.bing.com/HPImageArchive.aspx |
+| bpod-num | bpodNum | 16                                       |
+** Unsplash Source
+| flag         | var         | default                     |
+|--------------+-------------+-----------------------------|
+| unsplash-api | unsplashAPI | https://source.unsplash.com |
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
 * Features

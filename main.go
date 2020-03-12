@@ -35,6 +35,9 @@ var (
 	bpodAPI     string
 	bpodNum     int
 	unsplashAPI string
+
+	width  int
+	height int
 )
 
 func main() {
@@ -57,10 +60,14 @@ func main() {
 	flag.StringVar(&src, "src", "random", "Source for the image")
 	flag.StringVar(&mode, "mode", "random", "Daily, Weekly or Random wallpaper")
 
+	flag.IntVar(&width, "width", 1920, "Width of the image")
+	flag.IntVar(&height, "height", 1080, "Height of the image")
+
 	flag.StringVar(&apodAPI, "apod-api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apodAPIKey, "apod-api-key", "DEMO_KEY", "APOD API Key")
 	flag.StringVar(&bpodAPI, "bpod-api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API URL")
 	flag.IntVar(&bpodNum, "bpod-num", 16, "BPOD Number of images to fetch")
+	flag.StringVar(&unsplashAPI, "unsplash-api", "https://source.unsplash.com", "Unsplash Source API URL")
 	flag.DurationVar(&timeout, "timeout", 16, "Timeout for http client")
 	flag.Parse()
 
@@ -112,6 +119,53 @@ func parseSrcAndGetPath(src string, mode string) (string, error) {
 func getPathAPOD(mode string) (string, error) {
 	var err error
 	var imgPath string
+
+	switch mode {
+	case "daily", "random":
+		break
+	default:
+		return "", fmt.Errorf("Error: Unknown Mode")
+	}
+
+	type apodRes struct {
+		Copyright      string `json:"copyright"`
+		Date           string `json:"string"`
+		Explanation    string `json:"explanation"`
+		HDURL          string `json:"hdurl"`
+		MediaType      string `json:"media_type"`
+		ServiceVersion string `json:"service_version"`
+		Title          string `json:"title"`
+		URL            string `json:"url"`
+	}
+
+	apodNow := apodRes{}
+
+	req, err := http.NewRequest(http.MethodGet, apodAPI, nil)
+	if err != nil {
+		return "", err
+	}
+	q := req.URL.Query()
+	q.Add("api_key", apodAPIKey)
+	req.URL.RawQuery = q.Encode()
+
+	res, err := getRes(req)
+	if err != nil {
+		fmt.Printf("Error: GET %s\n", apodAPI)
+		return "", err
+	}
+	defer res.Body.Close()
+
+	apiBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return "", err
+	}
+
+	err = json.Unmarshal([]byte(apiBody), &apodNow)
+	if err != nil {
+		return "", err
+	}
+
+	imgPath = apodNow.HDURL
 	return imgPath, err
 }
 
@@ -182,6 +236,31 @@ func getPathBPOD(mode string) (string, error) {
 func getPathUnsplash(mode string) (string, error) {
 	var err error
 	var imgPath string
+
+	switch mode {
+	case "daily", "weekly":
+		unsplashAPI = fmt.Sprintf("%s/%s",
+			unsplashAPI, mode)
+	case "random":
+		unsplashAPI = fmt.Sprintf("%s/%sx%s",
+			unsplashAPI, strconv.Itoa(width), strconv.Itoa(height))
+	default:
+		return "", fmt.Errorf("Error: Unknown Mode")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, unsplashAPI, nil)
+	if err != nil {
+		return "", err
+	}
+
+	res, err := getRes(req)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	// Unsplash Source API will redirect to the image
+	imgPath = res.Request.URL.String()
 	return imgPath, err
 }
 
@@ -196,51 +275,6 @@ func setWall(imgPath string) error {
 	fmt.Printf("Path to set as Wallpaper: %s\n", imgPath)
 
 	err = exec.Command(feh, "--bg-fill", imgPath).Run()
-	return err
-}
-
-// Get url of Astronomy Picture of the Day & pass it to setWall()
-func setWallFromAPOD(apodI map[string]string) error {
-	type apodRes struct {
-		Copyright      string `json:"copyright"`
-		Date           string `json:"string"`
-		Explanation    string `json:"explanation"`
-		HDURL          string `json:"hdurl"`
-		MediaType      string `json:"media_type"`
-		ServiceVersion string `json:"service_version"`
-		Title          string `json:"title"`
-		URL            string `json:"url"`
-	}
-
-	apodNow := apodRes{}
-
-	req, err := http.NewRequest(http.MethodGet, apodI["api"], nil)
-	if err != nil {
-		return err
-	}
-	q := req.URL.Query()
-	q.Add("api_key", apodI["apiKey"])
-	req.URL.RawQuery = q.Encode()
-
-	res, err := getRes(req)
-	if err != nil {
-		fmt.Printf("Error: GET %s\n", apodI["api"])
-		return err
-	}
-	defer res.Body.Close()
-
-	apiBody, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal([]byte(apiBody), &apodNow)
-	if err != nil {
-		return err
-	}
-
-	// Set Astronomy Picture of the Day as wallpaper
-	err = setWall(apodNow.HDURL)
 	return err
 }
 
