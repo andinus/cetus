@@ -47,7 +47,7 @@ func main() {
 		err error
 
 		imgPath string
-		mode    string
+		wall    string
 		src     string
 		srcArr  []string = []string{
 			"apod",
@@ -58,7 +58,7 @@ func main() {
 
 	// Parse flags passed to program
 	flag.StringVar(&src, "src", "random", "Source for the image")
-	flag.StringVar(&mode, "mode", "random", "Daily, Weekly or Random wallpaper")
+	flag.StringVar(&wall, "wall", "random", "Daily, Weekly or Random wallpaper")
 
 	flag.IntVar(&width, "width", 1920, "Width of the image")
 	flag.IntVar(&height, "height", 1080, "Height of the image")
@@ -80,7 +80,7 @@ func main() {
 		log.Fatal("Error: Unknown Source")
 	}
 
-	imgPath, err = parseSrcAndGetPath(src, mode)
+	imgPath, err = parseSrcAndGetPath(src, wall)
 	errChk(err)
 
 	err = setWall(imgPath)
@@ -97,34 +97,34 @@ func contains(arr []string, str string) bool {
 }
 
 // Gets image path from src
-func parseSrcAndGetPath(src string, mode string) (string, error) {
+func parseSrcAndGetPath(src string, wall string) (string, error) {
 	var err error
 	var imgPath string
 
 	switch src {
 	case "apod":
 		fmt.Println("Astronomy Picture of the Day")
-		imgPath, err = getPathAPOD(mode)
+		imgPath, err = getPathAPOD(wall)
 	case "bpod":
 		fmt.Println("Bing Photo of the Day")
-		imgPath, err = getPathBPOD(mode)
+		imgPath, err = getPathBPOD(wall)
 	case "unsplash":
 		fmt.Println("Unsplash Source")
-		imgPath, err = getPathUnsplash(mode)
+		imgPath, err = getPathUnsplash(wall)
 	}
 
 	return imgPath, err
 }
 
-func getPathAPOD(mode string) (string, error) {
+func getPathAPOD(wall string) (string, error) {
 	var err error
 	var imgPath string
 
-	switch mode {
+	switch wall {
 	case "daily", "random":
 		break
 	default:
-		return "", fmt.Errorf("Error: Unknown Mode")
+		return "", fmt.Errorf("Error: Unknown wall")
 	}
 
 	type apodRes struct {
@@ -169,7 +169,7 @@ func getPathAPOD(mode string) (string, error) {
 	return imgPath, err
 }
 
-func getPathBPOD(mode string) (string, error) {
+func getPathBPOD(wall string) (string, error) {
 	var err error
 	var imgPath string
 
@@ -198,14 +198,14 @@ func getPathBPOD(mode string) (string, error) {
 	q := req.URL.Query()
 	q.Add("format", "js")
 
-	switch mode {
+	switch wall {
 	case "daily":
 		q.Add("n", "1")
 	case "random":
 		// Fetches 16 images (only info) & chooses a random image
 		q.Add("n", strconv.Itoa(bpodNum))
 	default:
-		return "", fmt.Errorf("Error: Unknown Mode")
+		return "", fmt.Errorf("Error: Unknown wall")
 	}
 
 	req.URL.RawQuery = q.Encode()
@@ -233,19 +233,19 @@ func getPathBPOD(mode string) (string, error) {
 	return imgPath, err
 }
 
-func getPathUnsplash(mode string) (string, error) {
+func getPathUnsplash(wall string) (string, error) {
 	var err error
 	var imgPath string
 
-	switch mode {
+	switch wall {
 	case "daily", "weekly":
 		unsplashAPI = fmt.Sprintf("%s/%s",
-			unsplashAPI, mode)
+			unsplashAPI, wall)
 	case "random":
 		unsplashAPI = fmt.Sprintf("%s/%sx%s",
 			unsplashAPI, strconv.Itoa(width), strconv.Itoa(height))
 	default:
-		return "", fmt.Errorf("Error: Unknown Mode")
+		return "", fmt.Errorf("Error: Unknown wall")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, unsplashAPI, nil)

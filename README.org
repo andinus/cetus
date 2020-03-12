@@ -4,10 +4,10 @@ Cetus is a wallpaper tool written in Go. It can set wallpapers from various
 sources. Default behaviour is to set a random wallpaper.
 
 * Defaults
-| flag   | var    | default                                   |
-|--------+--------+-------------------------------------------|
-| mode   | mode   | random (daily when random is unavailable) |
-| src    | src    | random                                    |
+| flag | var  | default                                   |
+|------+------+-------------------------------------------|
+| wall | wall | random (daily when random is unavailable) |
+| src  | src  | random                                    |
 
 Currently only Unsplash Source random is supported for width, height
 | width  | width  | 1920 |
@@ -17,7 +17,7 @@ Currently only Unsplash Source random is supported for width, height
 |--------------+------------+-------------------------------------|
 | apod-api     | apodAPI    | https://api.nasa.gov/planetary/apod |
 | apod-api-key | apodAPIKey | DEMO_KEY                            |
-| mode         | mode       | daily                               |
+| wall         | wall       | daily                               |
 ** Bing Photo of the Day
 | flag     | var     | default                                  |
 |----------+---------+------------------------------------------|
@@ -36,43 +36,43 @@ Currently only Unsplash Source random is supported for width, height
 ** Daily wallpaper
 *** from Astronomy Picture of the Day
 #+BEGIN_SRC sh
-cetus -src=apod -mode=daily
+cetus -src=apod -wall=daily
 #+END_SRC
 *** from Bing Photo of the Day
 #+BEGIN_SRC sh
-cetus -src=bpod -mode=daily
+cetus -src=bpod -wall=daily
 #+END_SRC
 *** from Unsplash Source
 #+BEGIN_SRC sh
-cetus -src=unsplash -mode=daily
+cetus -src=unsplash -wall=daily
 #+END_SRC
 *** from any service (choosen randomly)
 #+BEGIN_SRC sh
-cetus -src=random -mode=daily
+cetus -src=random -wall=daily
 
-cetus -mode=daily # This is same as above
+cetus -wall=daily # This is same as above
 #+END_SRC
 ** Weekly wallpaper
 *** from Unsplash Source
 #+BEGIN_SRC shp
-cetus -src=unsplash -mode=weekly
+cetus -src=unsplash -wall=weekly
 #+END_SRC
 ** Random wallpaper
 *** from Bing Photo of the Day
 #+BEGIN_SRC sh
-cetus -src=bpod -bpod-num 16 -mode=random # select from last 16 images
+cetus -src=bpod -bpod-num 16 -wall=random # select from last 16 images
 
 cetus -src=bpod # This is same as above
 #+END_SRC
 *** from Unsplash Source
 #+BEGIN_SRC sh
-cetus -src=unsplash -mode=random -width 1920 -height 1080
+cetus -src=unsplash -wall=random -width 1920 -height 1080
 
 cetus -src=unsplash # This is same as above
 #+END_SRC
 *** from any service (choosen randomly)
 #+BEGIN_SRC sh
-cetus -src=random -mode=random
+cetus -src=random -wall=random
 
 cetus # This is same as above
 #+END_SRC
