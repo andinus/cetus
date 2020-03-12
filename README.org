@@ -3,30 +3,9 @@
 Cetus is a wallpaper tool written in Go. It can set wallpapers from various
 sources. Default behaviour is to set a random wallpaper.
 
-* Defaults
-| flag | var  | default                                   |
-|------+------+-------------------------------------------|
-| wall | wall | random (daily when random is unavailable) |
-| src  | src  | random                                    |
-
-Currently only Unsplash Source random is supported for width, height
-| width  | width  | 1920 |
-| height | height | 1080 |
-** Astronomy Picture of the Day
-| flag         | var        | default                             |
-|--------------+------------+-------------------------------------|
-| apod-api     | apodAPI    | https://api.nasa.gov/planetary/apod |
-| apod-api-key | apodAPIKey | DEMO_KEY                            |
-| wall         | wall       | daily                               |
-** Bing Photo of the Day
-| flag     | var     | default                                  |
-|----------+---------+------------------------------------------|
-| bpod-api | bpodAPI | https://www.bing.com/HPImageArchive.aspx |
-| bpod-num | bpodNum | 16                                       |
-** Unsplash Source
-| flag         | var         | default                     |
-|--------------+-------------+-----------------------------|
-| unsplash-api | unsplashAPI | https://source.unsplash.com |
+* Uses
+- on system startup for new wallpaper at every startup
+- as a cron job to change wallpaper at set intervals
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
@@ -34,11 +13,11 @@ demo videos someday.
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Dependency
-- [[https://feh.finalrewind.org/][feh]]
 * Features
 - Set Daily, Weekly or Random wallpaper
 - Supports multiple sources
+* Dependency
+- [[https://feh.finalrewind.org/][feh]]
 * Examples
 ** Daily wallpaper
 *** from Astronomy Picture of the Day
@@ -83,6 +62,27 @@ cetus -src=random -wall=random
 
 cetus # This is same as above
 #+END_SRC
-* Uses
-- on system startup for new wallpaper at every startup
-- as a cron job to change wallpaper at set intervals
+* Defaults
+| flag | var  | default                                   |
+|------+------+-------------------------------------------|
+| wall | wall | random (daily when random is unavailable) |
+| src  | src  | random                                    |
+
+Currently only Unsplash Source random is supported for width, height
+| width  | width  | 1920 |
+| height | height | 1080 |
+** Astronomy Picture of the Day
+| flag         | var        | default                             |
+|--------------+------------+-------------------------------------|
+| apod-api     | apodAPI    | https://api.nasa.gov/planetary/apod |
+| apod-api-key | apodAPIKey | DEMO_KEY                            |
+| wall         | wall       | daily                               |
+** Bing Photo of the Day
+| flag     | var     | default                                  |
+|----------+---------+------------------------------------------|
+| bpod-api | bpodAPI | https://www.bing.com/HPImageArchive.aspx |
+| bpod-num | bpodNum | 16                                       |
+** Unsplash Source
+| flag         | var         | default                     |
+|--------------+-------------+-----------------------------|
+| unsplash-api | unsplashAPI | https://source.unsplash.com |
