@@ -66,7 +66,7 @@ func main() {
 	flag.StringVar(&apodAPI, "apod-api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apodAPIKey, "apod-api-key", "DEMO_KEY", "APOD API Key")
 	flag.StringVar(&bpodAPI, "bpod-api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API URL")
-	flag.IntVar(&bpodNum, "bpod-num", 16, "BPOD Number of images to fetch")
+	flag.IntVar(&bpodNum, "bpod-num", 7, "BPOD Number of images to fetch (max 7)")
 	flag.StringVar(&unsplashAPI, "unsplash-api", "https://source.unsplash.com", "Unsplash Source API URL")
 	flag.DurationVar(&timeout, "timeout", 16, "Timeout for http client")
 	flag.Parse()
@@ -202,7 +202,7 @@ func getPathBPOD(wall string) (string, error) {
 	case "daily":
 		q.Add("n", "1")
 	case "random":
-		// Fetches 16 images (only info) & chooses a random image
+		// Fetches image (only info) & chooses a random image
 		q.Add("n", strconv.Itoa(bpodNum))
 	default:
 		return "", fmt.Errorf("Error: Unknown wall")

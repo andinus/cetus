@@ -81,7 +81,7 @@ Currently only Unsplash Source random is supported for width, height
 | flag     | var     | default                                  |
 |----------+---------+------------------------------------------|
 | bpod-api | bpodAPI | https://www.bing.com/HPImageArchive.aspx |
-| bpod-num | bpodNum | 16                                       |
+| bpod-num | bpodNum | 7 (max 7)                                |
 ** Unsplash Source
 | flag         | var         | default                     |
 |--------------+-------------+-----------------------------|
