@@ -1,34 +1,39 @@
 #+TITLE: Cetus
 
-Cetus is a wallpaper setting tool written in Go. This is a work in-progress.
+Cetus is a wallpaper tool written in Go. It can set wallpapers from various
+sources. Default behaviour is to set a random wallpaper.
 
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
 
 * Features
-** Supports various Image of the Day services
-There are several Image of the Day services on the web, cetus will pull the
-latest image & set it as wallpaper.
-
-- [X] [[http://apod.nasa.gov/apod/astropix.html][Astronomy Picture of the Day]]
-- [X] Bing Photo of the Day
+- Set Daily, Weekly or Random wallpaper
 
 * Examples
-** Image of the Day
-*** Astronomy Picture of the Day
+** Daily wallpaper
+*** from Astronomy Picture of the Day
 #+BEGIN_SRC sh
-cetus -apod -apod-api=https://api.nasa.gov/planetary/apod \
-      -apod-api-key=DEMO_KEY
+cetus -apod -daily
 #+END_SRC
-*** Bing Photo of the Day
+*** from Bing Photo of the Day
 #+BEGIN_SRC sh
-cetus -bpod
+cetus -bpod -daily
 #+END_SRC
-** Set given wallpaper
+*** from Unsplash
 #+BEGIN_SRC sh
-# Local image as wallpaper
-cetus -img-path=/path/to/img
-
-# Remote image as wallpaper
-cetus -img-path=http://127.0.0.1
+cetus -unsplash -daily
+#+END_SRC
+*** from any service (choosen randomly)
+#+BEGIN_SRC sh
+cetus -daily
+#+END_SRC
+** Weekly wallpaper
+*** from Unsplash
+#+BEGIN_SRC sh
+cetus -unsplash -weekly
+#+END_SRC
+** Random wallpaper
+*** from Unsplash
+#+BEGIN_SRC sh
+cetus -unsplash -random
 #+END_SRC
