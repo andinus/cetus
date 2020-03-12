@@ -27,6 +27,13 @@ Currently only Unsplash Source random is supported for width, height
 | flag         | var         | default                     |
 |--------------+-------------+-----------------------------|
 | unsplash-api | unsplashAPI | https://source.unsplash.com |
+* Demo
+I just run some cetus commands on my computer, nothing fancy. I'll make better
+demo videos someday.
+
+| Version | Video                                                                |
+|---------+----------------------------------------------------------------------|
+| v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
 * Features
