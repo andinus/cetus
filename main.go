@@ -15,10 +15,8 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
@@ -30,10 +28,6 @@ import (
 var (
 	timeout time.Duration
 
-	apodAPI     string
-	apodAPIKey  string
-	bpodAPI     string
-	bpodNum     int
 	unsplashAPI string
 
 	width  int
@@ -50,8 +44,6 @@ func main() {
 		wall    string
 		src     string
 		srcArr  []string = []string{
-			"apod",
-			"bpod",
 			"unsplash",
 		}
 	)
@@ -63,10 +55,6 @@ func main() {
 	flag.IntVar(&width, "width", 1920, "Width of the image")
 	flag.IntVar(&height, "height", 1080, "Height of the image")
 
-	flag.StringVar(&apodAPI, "apod-api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
-	flag.StringVar(&apodAPIKey, "apod-api-key", "DEMO_KEY", "APOD API Key")
-	flag.StringVar(&bpodAPI, "bpod-api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API URL")
-	flag.IntVar(&bpodNum, "bpod-num", 7, "BPOD Number of images to fetch (max 7)")
 	flag.StringVar(&unsplashAPI, "unsplash-api", "https://source.unsplash.com", "Unsplash Source API URL")
 	flag.DurationVar(&timeout, "timeout", 16, "Timeout for http client")
 	flag.Parse()
@@ -102,133 +90,10 @@ func parseSrcAndGetPath(src string, wall string) (string, error) {
 	var imgPath string
 
 	switch src {
-	case "apod":
-		fmt.Println("Astronomy Picture of the Day")
-		imgPath, err = getPathAPOD(wall)
-	case "bpod":
-		fmt.Println("Bing Photo of the Day")
-		imgPath, err = getPathBPOD(wall)
 	case "unsplash":
 		fmt.Println("Unsplash Source")
 		imgPath, err = getPathUnsplash(wall)
 	}
-
-	return imgPath, err
-}
-
-func getPathAPOD(wall string) (string, error) {
-	var err error
-	var imgPath string
-
-	switch wall {
-	case "daily", "random":
-		break
-	default:
-		return "", fmt.Errorf("Error: Unknown wall")
-	}
-
-	type apodRes struct {
-		Copyright      string `json:"copyright"`
-		Date           string `json:"string"`
-		Explanation    string `json:"explanation"`
-		HDURL          string `json:"hdurl"`
-		MediaType      string `json:"media_type"`
-		ServiceVersion string `json:"service_version"`
-		Title          string `json:"title"`
-		URL            string `json:"url"`
-	}
-
-	apodNow := apodRes{}
-
-	req, err := http.NewRequest(http.MethodGet, apodAPI, nil)
-	if err != nil {
-		return "", err
-	}
-	q := req.URL.Query()
-	q.Add("api_key", apodAPIKey)
-	req.URL.RawQuery = q.Encode()
-
-	res, err := getRes(req)
-	if err != nil {
-		fmt.Printf("Error: GET %s\n", apodAPI)
-		return "", err
-	}
-	defer res.Body.Close()
-
-	apiBody, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	err = json.Unmarshal([]byte(apiBody), &apodNow)
-	if err != nil {
-		return "", err
-	}
-
-	imgPath = apodNow.HDURL
-	return imgPath, err
-}
-
-func getPathBPOD(wall string) (string, error) {
-	var err error
-	var imgPath string
-
-	type Images struct {
-		StartDate     string `json:"startdate"`
-		FullStartDate string `json:"fullstartdate"`
-		EndDate       string `json:"enddate"`
-		URL           string `json:"url"`
-		URLBase       string `json:"urlbase"`
-		Copyright     string `json:"copyright"`
-		CopyrightLink string `json:"copyrightlink"`
-		Title         string `json:"title"`
-		Hsh           string `json:"hsh"`
-	}
-
-	type bpodRes struct {
-		Image []Images `json:"images"`
-	}
-
-	bpodNow := bpodRes{}
-
-	req, err := http.NewRequest(http.MethodGet, bpodAPI, nil)
-	if err != nil {
-		return "", err
-	}
-	q := req.URL.Query()
-	q.Add("format", "js")
-
-	switch wall {
-	case "daily":
-		q.Add("n", "1")
-	case "random":
-		// Fetches image (only info) & chooses a random image
-		q.Add("n", strconv.Itoa(bpodNum))
-	default:
-		return "", fmt.Errorf("Error: Unknown wall")
-	}
-
-	req.URL.RawQuery = q.Encode()
-
-	res, err := getRes(req)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	apiBody, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	err = json.Unmarshal([]byte(apiBody), &bpodNow)
-	if err != nil {
-		return "", err
-	}
-
-	// Choose a random image
-	var i int = rand.Intn(len(bpodNow.Image))
-	imgPath = fmt.Sprintf("%s%s", "https://www.bing.com", bpodNow.Image[i].URL)
 
 	return imgPath, err
 }

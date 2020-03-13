@@ -1,7 +1,9 @@
 #+TITLE: Cetus
 
-Cetus is a wallpaper tool written in Go. It can set wallpapers from various
-sources. Default behaviour is to set a random wallpaper.
+Cetus is a wallpaper manager written in Go. It uses [[https://source.unsplash.com/][Unsplash Source]] to get
+wallpapers.
+
+*Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
 * Uses
 - on system startup for new wallpaper at every startup
@@ -13,76 +15,5 @@ demo videos someday.
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Features
-- Set Daily, Weekly or Random wallpaper
-- Supports multiple sources
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
-* Examples
-** Daily wallpaper
-*** from Astronomy Picture of the Day
-#+BEGIN_SRC sh
-cetus -src=apod -wall=daily
-#+END_SRC
-*** from Bing Photo of the Day
-#+BEGIN_SRC sh
-cetus -src=bpod -wall=daily
-#+END_SRC
-*** from Unsplash Source
-#+BEGIN_SRC sh
-cetus -src=unsplash -wall=daily
-#+END_SRC
-*** from any service (choosen randomly)
-#+BEGIN_SRC sh
-cetus -src=random -wall=daily
-
-cetus -wall=daily # This is same as above
-#+END_SRC
-** Weekly wallpaper
-*** from Unsplash Source
-#+BEGIN_SRC shp
-cetus -src=unsplash -wall=weekly
-#+END_SRC
-** Random wallpaper
-*** from Bing Photo of the Day
-#+BEGIN_SRC sh
-cetus -src=bpod -bpod-num 16 -wall=random # select from last 16 images
-
-cetus -src=bpod # This is same as above
-#+END_SRC
-*** from Unsplash Source
-#+BEGIN_SRC sh
-cetus -src=unsplash -wall=random -width 1920 -height 1080
-
-cetus -src=unsplash # This is same as above
-#+END_SRC
-*** from any service (choosen randomly)
-#+BEGIN_SRC sh
-cetus -src=random -wall=random
-
-cetus # This is same as above
-#+END_SRC
-* Defaults
-| flag | var  | default                                   |
-|------+------+-------------------------------------------|
-| wall | wall | random (daily when random is unavailable) |
-| src  | src  | random                                    |
-
-Currently only Unsplash Source random is supported for width, height
-| width  | width  | 1920 |
-| height | height | 1080 |
-** Astronomy Picture of the Day
-| flag         | var        | default                             |
-|--------------+------------+-------------------------------------|
-| apod-api     | apodAPI    | https://api.nasa.gov/planetary/apod |
-| apod-api-key | apodAPIKey | DEMO_KEY                            |
-| wall         | wall       | daily                               |
-** Bing Photo of the Day
-| flag     | var     | default                                  |
-|----------+---------+------------------------------------------|
-| bpod-api | bpodAPI | https://www.bing.com/HPImageArchive.aspx |
-| bpod-num | bpodNum | 7 (max 7)                                |
-** Unsplash Source
-| flag         | var         | default                     |
-|--------------+-------------+-----------------------------|
-| unsplash-api | unsplashAPI | https://source.unsplash.com |
