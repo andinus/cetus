@@ -7,6 +7,37 @@ sources for fetching the background.
 
 *Dependency*: [[https://feh.finalrewind.org/][feh]]
 
+* NASA Astronomy Picture of the Day
+cetus-nasa uses NASA's API to get the Astronomy Picture of the Day.
+** Features
+- set APOD as background
+- fetch information on APOD
+- choose custom date
+- choose date randomly
+** Examples
+#+BEGIN_SRC sh
+# set currently APOD as background
+cetus-nasa
+
+# set date randomly
+cetus-nasa -random
+
+# set 2020-01-05 APOD as background
+cetus-nasa -date 2020-01-05
+
+# change api endpoint & api key
+cetus-nasa -api https://api.nasa.gov/planetary/apod \
+           -api-key DEMO_KEY
+
+# don't set background, just fetch information
+cetus-nasa -fetch-only
+
+# don't output anything
+cetus-nasa -quiet
+
+# don't set background, just fetch & don't output anything
+cetus-nasa -quiet -fetch-only # why would anyone do this?
+#+END_SRC
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
