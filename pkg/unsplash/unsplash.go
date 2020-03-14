@@ -16,6 +16,8 @@ package unsplash
 
 import (
 	"fmt"
+	"net/http"
+	"time"
 
 	"framagit.org/andinus/cetus/pkg"
 )
@@ -31,10 +33,51 @@ func SetFromID(photoID string, width int, height int) error {
 	return err
 }
 
+// SetRandom sets a random photo as background
+func SetRandom(width int, height int) error {
+	var path string
+	var err error
+
+	path, err = getPathRandom(width, height)
+	if err != nil {
+		return err
+	}
+	err = background.Set(path)
+	return err
+}
+
 func getPathFromID(photoID string) string {
 	var path string
 	path = fmt.Sprintf("%s/%s", "https://source.unsplash.com", photoID)
 	return path
+}
+
+func getPathRandom(width int, height int) (string, error) {
+	var err error
+	var path string
+	var reqPath string
+
+	client := http.Client{
+		Timeout: time.Second * 64,
+	}
+
+	reqPath = "https://source.unsplash.com"
+	reqPath = appendSizeToPath(reqPath, width, height)
+
+	req, err := http.NewRequest(http.MethodGet, reqPath, nil)
+	if err != nil {
+		return "", err
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	// Unsplash Source redirects to the photo
+	path = res.Request.URL.String()
+	return path, nil
 }
 
 func appendSizeToPath(path string, width int, height int) string {

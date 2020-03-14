@@ -6,7 +6,8 @@ wallpapers.
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
 * Features
-- set a specific photo as wallpaper
+- set a specific photo as background
+- set a random photo as background
 - customize wallpaper size
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
@@ -23,4 +24,13 @@ photo-id flag can be used to set a specific photo as background.
 #+BEGIN_SRC sh
 cetus -width 1920 -height 1080 \
       -photo-id=FzrjgIId6NU
+#+END_SRC
+** random
+random flag can be used to set a random photo as background, this is the default
+behaviour.
+#+BEGIN_SRC sh
+cetus -width 1920 -height 1080 \
+      -random
+
+cetus -width 1920 -height 1080 # same as above
 #+END_SRC

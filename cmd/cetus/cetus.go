@@ -24,6 +24,7 @@ import (
 func main() {
 	var (
 		photoID string
+		random  bool
 
 		width  int
 		height int
@@ -32,6 +33,7 @@ func main() {
 	)
 
 	flag.StringVar(&photoID, "photo-id", "", "Unsplash Photo ID to set as background")
+	flag.BoolVar(&random, "random", true, "Set a random photo as background")
 
 	flag.IntVar(&width, "width", 1920, "Width of the image")
 	flag.IntVar(&height, "height", 1080, "Height of the image")
@@ -40,6 +42,12 @@ func main() {
 
 	if len(photoID) != 0 {
 		err = unsplash.SetFromID(photoID, width, height)
+		errChk(err)
+		return
+	}
+
+	if random {
+		err = unsplash.SetRandom(width, height)
 		errChk(err)
 		return
 	}
