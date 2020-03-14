@@ -1,0 +1,21 @@
+image: golang:1.13
+
+variables:
+  REPO_NAME: framagit.org/andinus/cetus
+
+before_script:
+  - mkdir -p $GOPATH/src/$REPO_NAME
+  - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME/
+  - cd $GOPATH/src/$REPO_NAME
+
+stages:
+  - build
+  - deploy
+
+compile:
+    stage: build
+    script:
+      - GOOS=openbsd GOARCH=amd64 go build ./cmd/cetus-nasa -o $CI_PROJECT_DIR/cetus-nasa-linux-amd64
+    artifacts:
+      paths:
+        - cetus-nasa-linux-amd64
