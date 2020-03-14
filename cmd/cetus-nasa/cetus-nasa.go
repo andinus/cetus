@@ -20,12 +20,14 @@ import (
 	"log"
 	"time"
 
-	"framagit.org/andinus/cetus/pkg"
+	"framagit.org/andinus/cetus/pkg/background"
+	"framagit.org/andinus/cetus/pkg/cetus"
 	"framagit.org/andinus/cetus/pkg/nasa"
 )
 
 var (
 	quiet     bool
+	version   bool
 	fetchOnly bool
 
 	api         string
@@ -38,18 +40,12 @@ var (
 )
 
 func main() {
-	var (
-		picturePath string
-		apodRes     nasa.APOD
-		err         error
-		apodInfo    map[string]string
-	)
-
-	dateHelp = fmt.Sprintf("Choose a random date between 1995-06-16 & %s",
-		time.Now().UTC().Format("2006-01-02"))
-	dateDefault = time.Now().UTC().Format("2006-01-02")
-
 	parseFlags()
+
+	if version {
+		cetus.Version()
+		return
+	}
 
 	// Convert timeout to seconds
 	timeout = timeout * time.Second
@@ -57,6 +53,13 @@ func main() {
 	if random {
 		date = nasa.RandDate()
 	}
+
+	var (
+		picturePath string
+		apodRes     nasa.APOD
+		err         error
+		apodInfo    map[string]string
+	)
 
 	apodInfo = make(map[string]string)
 	apodInfo["api"] = api
@@ -92,11 +95,17 @@ func main() {
 
 func parseFlags() {
 	flag.BoolVar(&quiet, "quiet", false, "No output")
+	flag.BoolVar(&version, "version", false, "Cetus version")
 	flag.BoolVar(&fetchOnly, "fetch-only", false, "Don't set background, only fetch info")
+
+	dateHelp = fmt.Sprintf("Choose a random date between 1995-06-16 & %s",
+		time.Now().UTC().Format("2006-01-02"))
 	flag.BoolVar(&random, "random", false, dateHelp)
 
 	flag.StringVar(&api, "api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apiKey, "api-key", "DEMO_KEY", "api.nasa.gov key for expanded usage")
+
+	dateDefault = time.Now().UTC().Format("2006-01-02")
 	flag.StringVar(&date, "date", dateDefault, "Date of the APOD image to retrieve")
 
 	flag.DurationVar(&timeout, "timeout", 32*time.Second, "Timeout for http client in seconds")
