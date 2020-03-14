@@ -15,9 +15,12 @@ stages:
 compile:
     stage: build
     only:
-      - tags
-      - triggers
-      - schedules
+      refs:
+        - web
+        - tags
+        - master
+        - schedules
+        - merge_requests
     script:
       - cd $GOPATH/src/$REPO_NAME/cmd/cetus-nasa
       - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-nasa-openbsd-amd64
