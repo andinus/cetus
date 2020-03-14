@@ -6,12 +6,9 @@ wallpapers.
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
 * Features
-- set a random/daily/weekly wallpaper
 - set a specific photo as wallpaper
-- set a wallpaper from a specific user, user's likes, a collection or a search
-  term
 - customize wallpaper size
-* Demo
+* pppDemo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
 
@@ -20,32 +17,3 @@ demo videos someday.
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
-* Installation
-** From source
-*** Download the source
-- Using Go
-#+BEGIN_SRC sh
-go get https://framagit.org/andinus/cetus.git
-#+END_SRC
-
-- Using git
-#+BEGIN_SRC sh
-git clone https://framagit.org/andinus/cetus.git
-#+END_SRC
-
-- Using curl
-#+BEGIN_SRC sh
-# get the master branch (supported formats: zip, tar.gz, tar.bz2, tar)
-curl -o cetus-master.tar.gz \
-     https://framagit.org/andinus/cetus/-/archive/master/cetus-master.tar.gz
-#+END_SRC
-*** Compile cetus
-Navigate to the source directory & compile cetus.
-
-#+BEGIN_SRC sh
-# compile
-go build
-
-# install in $PATH
-go install
-#+END_SRC
