@@ -8,7 +8,7 @@ wallpapers.
 * Features
 - set a specific photo as wallpaper
 - customize wallpaper size
-* pppDemo
+* Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
 
@@ -17,3 +17,10 @@ demo videos someday.
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
+* Usage
+** photo-id
+photo-id flag can be used to set a specific photo as background.
+#+BEGIN_SRC sh
+cetus -width 1920 -height 1080 \
+      -photo-id=FzrjgIId6NU
+#+END_SRC

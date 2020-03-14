@@ -29,7 +29,7 @@ func SetFromID(photoID string, width int, height int) error {
 		err error
 	)
 
-	size = fmt.Sprintf("%sx%s", width, height)
+	size = fmt.Sprintf("%dx%d", width, height)
 	path = fmt.Sprintf("%s/%s/%s", "https://source.unsplash.com", photoID, size)
 	err = background.Set(path)
 
