@@ -58,7 +58,9 @@ latest release.
 * Installation
 ** Binary
 framagit.org compiles cetus for OpenBSD & GNU/Linux amd64 on every release, to
-get the binary goto [[https://framagit.org/andinus/cetus/pipelines?scope=tags&page=1][Cetus Artifacts]].
+get the binary goto [[https://framagit.org/andinus/cetus/pipelines?scope=tags&page=1][Pipelines - tags]].
+
+To get the latest binary goto [[https://framagit.org/andinus/cetus/pipelines][Pipelines]].
 
 ** From Source
 #+BEGIN_SRC sh
