@@ -5,7 +5,7 @@ variables:
 
 before_script:
   - mkdir -p $GOPATH/src/$REPO_NAME
-  - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME/
+  - cp -fr $CI_PROJECT_DIR/* $GOPATH/src/$REPO_NAME/
   - cd $GOPATH/src/$REPO_NAME
 
 stages:
@@ -15,7 +15,9 @@ stages:
 compile:
     stage: build
     script:
-      - GOOS=openbsd GOARCH=amd64 go build ./cmd/cetus-nasa -o $CI_PROJECT_DIR/cetus-nasa-linux-amd64
+      - find *
+      - cd $GOPATH/src/$REPO_NAME/cmd/cetus-nasa
+      - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-nasa-openbsd-amd64
     artifacts:
       paths:
-        - cetus-nasa-linux-amd64
+        - cetus-nasa-openbsd-amd64
