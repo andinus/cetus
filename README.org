@@ -1,9 +1,13 @@
 #+HTML_HEAD: <link rel="stylesheet" href="../../static/style.css">
-#+HTML_HEAD: <link rel="icon" href="../../static/cetus.png" type="image/png">
+#+HTML_HEAD: <link rel="icon" href="../../static/projects/cetus/favicon.png" type="image/png">
+#+EXPORT_FILE_NAME: index
 #+TITLE: Cetus
 
 Cetus is a simple wallpaper management tool written in Go. It supports multiple
 sources for fetching the background.
+
+*Project Home*: [[https://andinus.nand.sh/projects/cetus/][Cetus]]
+*Source Code*: [[https://framagit.org/andinus/cetus][Andinus / Cetus]]
 
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
