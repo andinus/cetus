@@ -20,23 +20,27 @@ import (
 	"framagit.org/andinus/cetus/pkg"
 )
 
-// GetPathFromID returns path of the photo from Unsplash Photo ID
-func GetPathFromID(photoID string, width int, height int) string {
-	var path string
-	var size string
-
-	size = fmt.Sprintf("%dx%d", width, height)
-	path = fmt.Sprintf("%s/%s/%s", "https://source.unsplash.com", photoID, size)
-	return path
-}
-
 // SetFromID sets background from Unsplash Photo ID
 func SetFromID(photoID string, width int, height int) error {
 	var path string
 	var err error
 
-	path = GetPathFromID(photoID, width, height)
+	path = getPathFromID(photoID)
+	path = appendSizeToPath(path, width, height)
 	err = background.Set(path)
-
 	return err
+}
+
+func getPathFromID(photoID string) string {
+	var path string
+	path = fmt.Sprintf("%s/%s", "https://source.unsplash.com", photoID)
+	return path
+}
+
+func appendSizeToPath(path string, width int, height int) string {
+	var size string
+
+	size = fmt.Sprintf("%dx%d", width, height)
+	path = fmt.Sprintf("%s/%s", path, size)
+	return path
 }
