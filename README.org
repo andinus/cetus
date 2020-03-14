@@ -15,6 +15,7 @@ demo videos someday.
 
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
+| v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
 * Dependency
 - [[https://feh.finalrewind.org/][feh]]
