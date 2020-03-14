@@ -55,3 +55,22 @@ latest release.
 |---------+----------------------------------------------------------------------|
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
+* Installation
+** Binary
+|                 | [[https://framagit.org/andinus/cetus/-/jobs/700844/artifacts/browse][Cetus Artifacts]]          |
+|-----------------+--------------------------|
+| OpenBSD amd64   | [[https://framagit.org/andinus/cetus/-/jobs/700844/artifacts/file/cetus-nasa-openbsd-amd64][cetus-nasa-openbsd-amd64]] |
+| GNU/Linux amd64 | [[https://framagit.org/andinus/cetus/-/jobs/700844/artifacts/file/cetus-nasa-linux-amd64][cetus-nasa-linux-amd64]]   |
+** From Source
+#+BEGIN_SRC sh
+# get master branch archive
+curl -o cetus-master.tar.gz \
+     https://framagit.org/andinus/cetus/-/archive/master/cetus-master.tar.gz
+
+# extract the archive
+tar -xzf cetus-master.tar.gz
+
+# install cetus
+cd cetus-master && \
+    go install ./cmd/cetus-nasa
+#+END_SRC
