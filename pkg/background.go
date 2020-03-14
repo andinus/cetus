@@ -14,6 +14,8 @@
 
 package background
 
+import "os/exec"
+
 // Set calls feh to set the background
 func Set(path string) error {
 	feh, err := exec.LookPath("feh")

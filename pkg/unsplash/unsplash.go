@@ -12,41 +12,26 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-package main
+package unsplash
 
 import (
-	"flag"
-	"log"
+	"fmt"
 
-	"framagit.org/andinus/cetus/pkg/unsplash"
+	"framagit.org/andinus/cetus/pkg"
 )
 
-func main() {
+// SetFromID sets background from Unsplash Photo ID
+func SetFromID(photoID string, width int, height int) error {
 	var (
-		photoID string
-
-		width  int
-		height int
+		path string
+		size string
 
 		err error
 	)
 
-	flag.StringVar(&photoID, "photo-id", "", "Unsplash Photo ID to set as background")
+	size = fmt.Sprintf("%sx%s", width, height)
+	path = fmt.Sprintf("%s/%s/%s", "https://source.unsplash.com", photoID, size)
+	err = background.Set(path)
 
-	flag.IntVar(&width, "width", 1920, "Width of the image")
-	flag.IntVar(&height, "height", 1080, "Height of the image")
-
-	flag.Parse()
-
-	if len(photoID) != 0 {
-		err = unsplash.SetFromID(photoID, width, height)
-		errChk(err)
-		return
-	}
-}
-
-func errChk(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
+	return err
 }
