@@ -1,37 +1,20 @@
 #+TITLE: Cetus
 
-Cetus is a wallpaper manager written in Go. It uses [[https://source.unsplash.com/][Unsplash Source]] to get
-wallpapers.
+Cetus is a simple wallpaper management tool written in Go. It supports multiple
+sources for fetching the background.
 
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
-* Features
-- set a specific photo as background
-- set a random photo as background
-- customize wallpaper size
+*Dependency*: [[https://feh.finalrewind.org/][feh]]
+
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
+
+*Note*: Cetus was restructured multiple times & these demos may not work on the
+latest release.
 
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Dependency
-- [[https://feh.finalrewind.org/][feh]]
-* Usage
-** photo-id
-photo-id flag can be used to set a specific photo as background.
-#+BEGIN_SRC sh
-cetus -width 1920 -height 1080 \
-      -photo-id=FzrjgIId6NU
-#+END_SRC
-** random
-random flag can be used to set a random photo as background, this is the default
-behaviour.
-#+BEGIN_SRC sh
-cetus -width 1920 -height 1080 \
-      -random
-
-cetus -width 1920 -height 1080 # same as above
-#+END_SRC
