@@ -16,7 +16,9 @@ package cetus
 
 import "fmt"
 
+var version string = "v0.4.1"
+
 // Version prints cetus version
 func Version() {
-	fmt.Println("Cetus v0.4.0")
+	fmt.Println("Cetus ", version)
 }
