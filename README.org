@@ -1,3 +1,5 @@
+#+HTML_HEAD: <link rel="stylesheet" href="../../static/style.css">
+#+HTML_HEAD: <link rel="icon" href="../../static/cetus.png" type="image/png">
 #+TITLE: Cetus
 
 Cetus is a simple wallpaper management tool written in Go. It supports multiple
