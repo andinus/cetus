@@ -77,6 +77,10 @@ cetus-nasa -api https://api.nasa.gov/planetary/apod \
 # don't set background, just fetch information
 cetus-nasa -fetch-only
 
+# don't set background, just fetch & print only the path (useful in
+# scripts)
+cetus-nasa -fetch-only -path-only
+
 # don't output anything
 cetus-nasa -quiet
 

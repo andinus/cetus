@@ -29,6 +29,7 @@ var (
 	quiet     bool
 	version   bool
 	fetchOnly bool
+	pathOnly  bool
 
 	api         string
 	apiKey      string
@@ -91,6 +92,7 @@ func parseFlags() {
 	dateHelp = fmt.Sprintf("Choose a random date between 1995-06-16 & %s",
 		time.Now().UTC().Format("2006-01-02"))
 	flag.BoolVar(&random, "random", false, dateHelp)
+	flag.BoolVar(&pathOnly, "path-only", false, "Print only path of the image")
 
 	flag.StringVar(&api, "api", "https://api.nasa.gov/planetary/apod", "APOD API URL")
 	flag.StringVar(&apiKey, "api-key", "DEMO_KEY", "api.nasa.gov key for expanded usage")
@@ -105,6 +107,10 @@ func parseFlags() {
 
 func printDetails(apodRes nasa.APOD) {
 	if quiet {
+		return
+	}
+	if pathOnly {
+		cetus.PrintPath(apodPhoto.HDURL)
 		return
 	}
 	fmt.Printf("Title: %s\n\n", apodRes.Title)
