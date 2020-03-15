@@ -14,6 +14,37 @@ sources for fetching the background.
 
 *Dependency*: [[https://feh.finalrewind.org/][feh]]
 
+* Bing Photo of the Day
+cetus-bing fetches Bing Photo of the Day.
+
+** Features
+- set BPOD as background
+- fetch information on BPOD
+- choose random photo
+** Examples
+#+BEGIN_SRC sh
+# set currently BPOD as background
+cetus-bing
+
+# set photo randomly
+cetus-bing -random
+
+# change api endpoint
+cetus-bing -api https://www.bing.com/HPImageArchive.aspx
+
+# don't set background, just fetch information
+cetus-bing -fetch-only
+
+# don't set background, just fetch & print only the path (useful in
+# scripts)
+cetus-bing -fetch-only -path-only
+
+# don't output anything
+cetus-bing -quiet
+
+# don't set background, just fetch & don't output anything
+cetus-bing -quiet -fetch-only # why would anyone do this?
+#+END_SRC
 * NASA Astronomy Picture of the Day
 cetus-nasa uses NASA's API to get the Astronomy Picture of the Day.
 
@@ -82,5 +113,6 @@ tar -xzf cetus-master.tar.gz
 
 # install cetus
 cd cetus-master && \
-    go install ./cmd/cetus-nasa
+    go install ./cmd/cetus-nasa && \
+    go install ./cmd/cetus-bing
 #+END_SRC

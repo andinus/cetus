@@ -22,3 +22,8 @@ var version string = "v0.4.3"
 func Version() {
 	fmt.Printf("Cetus %s\n", version)
 }
+
+// PrintPath prints the path passed
+func PrintPath(path string) {
+	fmt.Println(path)
+}
