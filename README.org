@@ -42,8 +42,12 @@ cetus-bing -fetch-only -path-only
 # don't output anything
 cetus-bing -quiet
 
+# dump received response
+cetus-bing -dump
+
 # don't set background, just fetch & don't output anything
 cetus-bing -quiet -fetch-only # why would anyone do this?
+
 #+END_SRC
 * NASA Astronomy Picture of the Day
 cetus-nasa uses NASA's API to get the Astronomy Picture of the Day.
@@ -83,6 +87,9 @@ cetus-nasa -fetch-only -path-only
 
 # don't output anything
 cetus-nasa -quiet
+
+# dump received response
+cetus-nasa -dump
 
 # don't set background, just fetch & don't output anything
 cetus-nasa -quiet -fetch-only # why would anyone do this?
