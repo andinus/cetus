@@ -69,9 +69,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if !quiet {
-		printDetails(apodRes)
-	}
+	printDetails(apodRes)
 
 	// if fetchOnly is true then don't set background
 	if fetchOnly {
@@ -110,6 +108,9 @@ func parseFlags() {
 }
 
 func printDetails(apodRes nasa.APOD) {
+	if quiet {
+		return
+	}
 	fmt.Printf("Title: %s\n\n", apodRes.Title)
 	fmt.Printf("Copyright: %s\n", apodRes.Copyright)
 	fmt.Printf("Date: %s\n\n", apodRes.Date)
