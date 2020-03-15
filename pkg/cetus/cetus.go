@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-var version string = "v0.4.9"
+var version string = "v0.4.10"
 
 // Version prints cetus version
 func Version() {
