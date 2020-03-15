@@ -96,6 +96,7 @@ latest release.
 
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
+| v0.4.6  | https://diode.zone/videos/watch/965bb7a4-029a-4584-a40d-241959d1aced |
 | v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
