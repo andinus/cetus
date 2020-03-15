@@ -15,6 +15,10 @@ sources for fetching the background.
 
 * NASA Astronomy Picture of the Day
 cetus-nasa uses NASA's API to get the Astronomy Picture of the Day.
+
+*Note*: If the returned media type is not image then cetus-nasa will only print
+details & not try to set background.
+
 ** Features
 - set APOD as background
 - fetch information on APOD
@@ -30,6 +34,9 @@ cetus-nasa -random
 
 # set 2020-01-05 APOD as background
 cetus-nasa -date 2020-01-05
+
+# 2020-03-15 APOD is a video, cetus will only print details
+cetus-nasa -date 2020-03-15
 
 # change api endpoint & api key
 cetus-nasa -api https://api.nasa.gov/planetary/apod \
