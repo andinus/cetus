@@ -23,7 +23,7 @@ cetus-bing fetches Bing Photo of the Day.
 - choose random photo
 ** Examples
 #+BEGIN_SRC sh
-# set currently BPOD as background
+# set current BPOD as background
 cetus-bing
 
 # set photo randomly
