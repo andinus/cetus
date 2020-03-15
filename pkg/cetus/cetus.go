@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-var version string = "v0.4.7"
+var version string = "v0.4.8"
 
 // Version prints cetus version
 func Version() {
@@ -19,6 +19,8 @@ func PrintPath(path string) {
 
 // ErrChk logs the context & error
 func ErrChk(ctx string, err error) {
-	log.Println(ctx)
-	log.Fatal(err)
+	if err != nil {
+		log.Println(ctx)
+		log.Fatal(err)
+	}
 }
