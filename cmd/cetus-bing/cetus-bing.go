@@ -63,7 +63,18 @@ func main() {
 	// responses, choose a random response from the list
 	var i int = rand.Intn(len(bpodRes.Photos))
 	bpodPhoto = bpodRes.Photos[i]
+
+	// correct image path
 	bpodPhoto.URL = fmt.Sprintf("%s%s", "https://www.bing.com", bpodPhoto.URL)
+
+	// correct date format
+	var dt time.Time
+	dt, err = time.Parse("20060102", bpodPhoto.StartDate)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bpodPhoto.StartDate = dt.Format("2006-01-02")
+
 	printDetails(bpodPhoto)
 
 	// if fetchOnly is true then don't set background
@@ -105,7 +116,7 @@ func printDetails(bpodPhoto bing.Photo) {
 	fmt.Printf("Copyright: %s\n", bpodPhoto.Copyright)
 	fmt.Printf("Copyright Link: %s\n", bpodPhoto.CopyrightLink)
 	fmt.Printf("Date: %s\n\n", bpodPhoto.StartDate)
-	fmt.Printf("URL: %s\n\n", bpodPhoto.URL)
+	fmt.Printf("URL: %s\n", bpodPhoto.URL)
 }
 
 func getBPODRes() (bing.BPOD, error) {
