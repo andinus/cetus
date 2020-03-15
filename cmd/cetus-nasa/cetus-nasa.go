@@ -117,7 +117,7 @@ func printDetails(apodRes nasa.APOD) {
 	if apodRes.MediaType == "image" {
 		fmt.Printf("URL: %s\n\n", apodRes.HDURL)
 	} else {
-		fmt.Printf("URL: %s\n\n", apodRes.HDURL)
+		fmt.Printf("URL: %s\n\n", apodRes.URL)
 	}
 	fmt.Printf("Explanation: %s\n", apodRes.Explanation)
 }
