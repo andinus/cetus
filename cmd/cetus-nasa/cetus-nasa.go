@@ -37,6 +37,9 @@ var (
 	dateHelp    string
 	dateDefault string
 	timeout     time.Duration
+
+	err     error
+	apodRes nasa.APOD
 )
 
 func main() {
@@ -54,12 +57,6 @@ func main() {
 		date = nasa.RandDate()
 	}
 
-	var (
-		picturePath string
-		apodRes     nasa.APOD
-		err         error
-	)
-
 	// get response from api
 	apodRes, err = getAPODRes()
 	if err != nil {
@@ -75,11 +72,10 @@ func main() {
 	if fetchOnly {
 		return
 	}
-	picturePath = apodRes.HDURL
 
 	// if media type is an image then set background
 	if apodRes.MediaType == "image" {
-		err = background.Set(picturePath)
+		err = background.Set(apodRes.HDURL)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -124,11 +120,7 @@ func printDetails(apodRes nasa.APOD) {
 }
 
 func getAPODRes() (nasa.APOD, error) {
-	var (
-		apodRes  nasa.APOD
-		err      error
-		apodInfo map[string]string
-	)
+	var apodInfo map[string]string
 	apodInfo = make(map[string]string)
 	apodInfo["api"] = api
 	apodInfo["apiKey"] = apiKey
