@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"log"
 	"math/rand"
 	"time"
 
@@ -60,7 +59,7 @@ func main() {
 
 	bpod := bpod{}
 	err = json.Unmarshal([]byte(body), &bpod)
-	errChk("body unmarshal failed", err)
+	cetus.ErrChk("body unmarshal failed", err)
 
 	// if random was set then bpodRes holds list of multiple
 	// responses, choose a random response from the list
@@ -72,7 +71,7 @@ func main() {
 
 	// correct date format
 	dt, err := time.Parse("20060102", bpodPhoto.startDate)
-	errChk("bpodPhoto.startDate parse failed", err)
+	cetus.ErrChk("bpodPhoto.startDate parse failed", err)
 	bpodPhoto.startDate = dt.Format("2006-01-02")
 
 	printDetails(bpodPhoto)
@@ -83,7 +82,7 @@ func main() {
 	}
 
 	err = background.Set(bpodPhoto.url)
-	errChk("setting background failed", err)
+	cetus.ErrChk("setting background failed", err)
 }
 
 func parseFlags() {
@@ -125,9 +124,4 @@ func bpodBody() (string, error) {
 
 	body, err := bing.GetBpodJson(reqInfo, t)
 	return body, err
-}
-
-func errChk(ctx string, err error) {
-	log.Println(ctx)
-	log.Fatal(err)
 }
