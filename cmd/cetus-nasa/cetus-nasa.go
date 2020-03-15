@@ -110,7 +110,7 @@ func printDetails(apodRes nasa.APOD) {
 		return
 	}
 	if pathOnly {
-		cetus.PrintPath(apodPhoto.HDURL)
+		cetus.PrintPath(apodRes.HDURL)
 		return
 	}
 	fmt.Printf("Title: %s\n\n", apodRes.Title)
