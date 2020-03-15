@@ -75,11 +75,7 @@ func main() {
 	}
 
 	if !quiet {
-		fmt.Printf("Title: %s\n\n", apodRes.Title)
-		fmt.Printf("Copyright: %s\n", apodRes.Copyright)
-		fmt.Printf("Date: %s\n\n", apodRes.Date)
-		fmt.Printf("URL: %s\n\n", apodRes.HDURL)
-		fmt.Printf("Explanation: %s\n", apodRes.Explanation)
+		printDetails(apodRes)
 	}
 
 	// if fetchOnly is true then don't set background
@@ -87,10 +83,15 @@ func main() {
 		return
 	}
 	picturePath = apodRes.HDURL
-	err = background.Set(picturePath)
-	if err != nil {
-		log.Fatal(err)
+
+	// if media type is an image then set background
+	if apodRes.MediaType == "image" {
+		err = background.Set(picturePath)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
+
 }
 
 func parseFlags() {
@@ -111,4 +112,13 @@ func parseFlags() {
 	flag.DurationVar(&timeout, "timeout", 32*time.Second, "Timeout for http client in seconds")
 	flag.Parse()
 
+}
+
+func printDetails(apodRes nasa.APOD) {
+	fmt.Printf("Title: %s\n\n", apodRes.Title)
+	fmt.Printf("Copyright: %s\n", apodRes.Copyright)
+	fmt.Printf("Date: %s\n\n", apodRes.Date)
+	fmt.Printf("Media Type: %s\n", apodRes.MediaType)
+	fmt.Printf("URL: %s\n\n", apodRes.HDURL)
+	fmt.Printf("Explanation: %s\n", apodRes.Explanation)
 }
