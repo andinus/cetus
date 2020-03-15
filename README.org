@@ -6,8 +6,9 @@
 Cetus is a simple wallpaper management tool written in Go. It supports multiple
 sources for fetching the background.
 
-| Project Home | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
-| Source Code  | [[https://framagit.org/andinus/cetus][Andinus / Cetus]] |
+| Project Home  | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
+| Source Code   | [[https://framagit.org/andinus/cetus][Andinus / Cetus]] |
+| GitHub Mirror | [[https://github.com/andinus/cetus][Cetus - GitHub]]  |
 
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
 
