@@ -58,15 +58,10 @@ func main() {
 		picturePath string
 		apodRes     nasa.APOD
 		err         error
-		apodInfo    map[string]string
 	)
 
-	apodInfo = make(map[string]string)
-	apodInfo["api"] = api
-	apodInfo["apiKey"] = apiKey
-	apodInfo["date"] = date
-
-	apodRes, err = nasa.APODPath(apodInfo, timeout)
+	// get response from api
+	apodRes, err = getAPODRes()
 	if err != nil {
 		if len(apodRes.Msg) != 0 {
 			log.Println("Message: ", apodRes.Msg)
@@ -125,4 +120,20 @@ func printDetails(apodRes nasa.APOD) {
 		fmt.Printf("URL: %s\n\n", apodRes.HDURL)
 	}
 	fmt.Printf("Explanation: %s\n", apodRes.Explanation)
+}
+
+func getAPODRes() (nasa.APOD, error) {
+	var (
+		apodRes  nasa.APOD
+		err      error
+		apodInfo map[string]string
+	)
+	apodInfo = make(map[string]string)
+	apodInfo["api"] = api
+	apodInfo["apiKey"] = apiKey
+	apodInfo["date"] = date
+
+	apodRes, err = nasa.APODPath(apodInfo, timeout)
+
+	return apodRes, err
 }
