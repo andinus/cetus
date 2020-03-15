@@ -94,6 +94,40 @@ cetus-nasa -dump
 # don't set background, just fetch & don't output anything
 cetus-nasa -quiet -fetch-only # why would anyone do this?
 #+END_SRC
+* Wallhaven
+cetus-wallhaven uses Wallhaven's API to get random background.
+
+** Features
+- set random image as background
+- fetch information
+** Examples
+#+BEGIN_SRC sh
+# set a random image as background
+cetus-wallhaven
+
+# same as above
+cetus-wallhaven -random
+
+# change api endpoint & api key
+cetus-wallhaven -api https://wallhaven.cc/api/v1/search \
+           -api-key
+
+# don't set background, just fetch information
+cetus-wallhaven -fetch-only
+
+# don't set background, just fetch & print only the path (useful in
+# scripts)
+cetus-wallhaven -fetch-only -path-only
+
+# don't output anything
+cetus-wallhaven -quiet
+
+# dump received response
+cetus-wallhaven -dump
+
+# don't set background, just fetch & don't output anything
+cetus-wallhaven -quiet -fetch-only # why would anyone do this?
+#+END_SRC
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
