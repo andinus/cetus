@@ -13,17 +13,17 @@ import (
 )
 
 type apod struct {
-	copyright      string `json:"copyright"`
-	date           string `json:"date"`
-	explanation    string `json:"explanation"`
-	hdURL          string `json:"hdurl"`
-	mediaType      string `json:"media_type"`
-	serviceVersion string `json:"service_version"`
-	title          string `json:"title"`
-	url            string `json:"url"`
+	Copyright      string `json:"copyright"`
+	Date           string `json:"date"`
+	Explanation    string `json:"explanation"`
+	HdURL          string `json:"hdurl"`
+	MediaType      string `json:"media_type"`
+	ServiceVersion string `json:"service_version"`
+	Title          string `json:"title"`
+	Url            string `json:"url"`
 
-	code int    `json:"code"`
-	msg  string `json:"msg"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 var (
@@ -63,8 +63,8 @@ func main() {
 	apod := apod{}
 	err = json.Unmarshal([]byte(body), &apod)
 	cetus.ErrChk("body unmarshal failed", err)
-	if len(apod.msg) != 0 {
-		log.Println("Message: ", apod.msg)
+	if len(apod.Msg) != 0 {
+		log.Println("Message: ", apod.Msg)
 	}
 
 	printDetails(apod)
@@ -75,11 +75,10 @@ func main() {
 	}
 
 	// if media type is an image then set background
-	if apod.mediaType == "image" {
-		err = background.Set(apod.hdURL)
+	if apod.MediaType == "image" {
+		err = background.Set(apod.HdURL)
 		cetus.ErrChk("setting background failed", err)
 	}
-
 }
 
 func parseFlags() {
@@ -108,19 +107,19 @@ func printDetails(apod apod) {
 		return
 	}
 	if pathOnly {
-		cetus.PrintPath(apod.hdURL)
+		cetus.PrintPath(apod.HdURL)
 		return
 	}
-	fmt.Printf("Title: %s\n\n", apod.title)
-	fmt.Printf("Copyright: %s\n", apod.copyright)
-	fmt.Printf("Date: %s\n\n", apod.date)
-	fmt.Printf("Media Type: %s\n", apod.mediaType)
-	if apod.mediaType == "image" {
-		fmt.Printf("URL: %s\n\n", apod.hdURL)
+	fmt.Printf("Title: %s\n\n", apod.Title)
+	fmt.Printf("Copyright: %s\n", apod.Copyright)
+	fmt.Printf("Date: %s\n\n", apod.Date)
+	fmt.Printf("Media Type: %s\n", apod.MediaType)
+	if apod.MediaType == "image" {
+		fmt.Printf("URL: %s\n\n", apod.HdURL)
 	} else {
-		fmt.Printf("URL: %s\n\n", apod.url)
+		fmt.Printf("URL: %s\n\n", apod.Url)
 	}
-	fmt.Printf("Explanation: %s\n", apod.explanation)
+	fmt.Printf("Explanation: %s\n", apod.Explanation)
 }
 
 func apodBody() (string, error) {

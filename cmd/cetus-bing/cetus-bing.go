@@ -13,19 +13,19 @@ import (
 )
 
 type photo struct {
-	startDate     string `json:"startdate"`
-	fullStartDate string `json:"fullstartdate"`
-	endDate       string `json:"enddate"`
-	url           string `json:"url"`
-	urlBase       string `json:"urlbase"`
-	copyright     string `json:"copyright"`
-	copyrightLink string `json:"copyrightlink"`
-	title         string `json:"title"`
-	hsh           string `json:"hsh"`
+	StartDate     string `json:"startdate"`
+	FullStartDate string `json:"fullstartdate"`
+	EndDate       string `json:"enddate"`
+	Url           string `json:"url"`
+	UrlBase       string `json:"urlbase"`
+	Copyright     string `json:"copyright"`
+	CopyrightLink string `json:"copyrightlink"`
+	Title         string `json:"title"`
+	Hsh           string `json:"hsh"`
 }
 
 type bpod struct {
-	photos []photo `json:"images"`
+	Photos []photo `json:"images"`
 }
 
 var (
@@ -63,16 +63,16 @@ func main() {
 
 	// if random was set then bpodRes holds list of multiple
 	// responses, choose a random response from the list
-	var i int = rand.Intn(len(bpod.photos))
-	bpodPhoto := bpod.photos[i]
+	var i int = rand.Intn(len(bpod.Photos))
+	bpodPhoto := bpod.Photos[i]
 
 	// correct image path
-	bpodPhoto.url = fmt.Sprintf("%s%s", "https://www.bing.com", bpodPhoto.url)
+	bpodPhoto.Url = fmt.Sprintf("%s%s", "https://www.bing.com", bpodPhoto.Url)
 
 	// correct date format
-	dt, err := time.Parse("20060102", bpodPhoto.startDate)
+	dt, err := time.Parse("20060102", bpodPhoto.StartDate)
 	cetus.ErrChk("bpodPhoto.startDate parse failed", err)
-	bpodPhoto.startDate = dt.Format("2006-01-02")
+	bpodPhoto.StartDate = dt.Format("2006-01-02")
 
 	printDetails(bpodPhoto)
 
@@ -81,7 +81,7 @@ func main() {
 		return
 	}
 
-	err = background.Set(bpodPhoto.url)
+	err = background.Set(bpodPhoto.Url)
 	cetus.ErrChk("setting background failed", err)
 }
 
@@ -105,14 +105,14 @@ func printDetails(bpodPhoto photo) {
 		return
 	}
 	if pathOnly {
-		cetus.PrintPath(bpodPhoto.url)
+		cetus.PrintPath(bpodPhoto.Url)
 		return
 	}
-	fmt.Printf("Title: %s\n\n", bpodPhoto.title)
-	fmt.Printf("Copyright: %s\n", bpodPhoto.copyright)
-	fmt.Printf("Copyright Link: %s\n", bpodPhoto.copyrightLink)
-	fmt.Printf("Date: %s\n\n", bpodPhoto.startDate)
-	fmt.Printf("URL: %s\n", bpodPhoto.url)
+	fmt.Printf("Title: %s\n\n", bpodPhoto.Title)
+	fmt.Printf("Copyright: %s\n", bpodPhoto.Copyright)
+	fmt.Printf("Copyright Link: %s\n", bpodPhoto.CopyrightLink)
+	fmt.Printf("Date: %s\n\n", bpodPhoto.StartDate)
+	fmt.Printf("URL: %s\n", bpodPhoto.Url)
 }
 
 func bpodBody() (string, error) {
