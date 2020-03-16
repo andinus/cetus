@@ -18,32 +18,32 @@ type wh struct {
 }
 
 // type meta struct {
-// 	CurrentPage int64  `json:"current_page"`
-// 	LastPage    int64  `json:"last_page"`
-// 	PerPage     int64  `json:"per_page"`
-// 	Total       int64  `json:"total"`
+// 	CurrentPage int    `json:"current_page"`
+// 	LastPage    int    `json:"last_page"`
+// 	PerPage     int    `json:"per_page"`
+// 	Total       int    `json:"total"`
 // 	Query       string `json:"query"`
 // 	Seed        string `json:"seed"`
 // }
 
 type photo struct {
-	Id       string `json:"id"`
-	Url      string `json:"url"`
-	ShortUrl string `json:"short_url"`
-	// Views      int      `json:"views"`
-	// Favorites  int      `json:"favorites"`
-	Source   string `json:"source"`
-	Purity   string `json:"purity"`
-	Category string `json:"general"`
-	// DimensionX int      `json:"dimension_x"`
-	// DimensionY int      `json:"dimension_y"`
-	Resolution string `json:"resolution"`
-	Ratio      string `json:"ratio"`
-	// FileSize   int      `json:"file_size"`
-	FileType  string   `json:"file_type"`
-	CreatedAt string   `json:"created_at"`
-	Path      string   `json:"path"`
-	Colors    []string `json:"colors"`
+	Id         string   `json:"id"`
+	Url        string   `json:"url"`
+	ShortUrl   string   `json:"short_url"`
+	Views      int      `json:"views"`
+	Favorites  int      `json:"favorites"`
+	Source     string   `json:"source"`
+	Purity     string   `json:"purity"`
+	Category   string   `json:"category"`
+	DimensionX int      `json:"dimension_x"`
+	DimensionY int      `json:"dimension_y"`
+	Resolution string   `json:"resolution"`
+	Ratio      string   `json:"ratio"`
+	FileSize   int      `json:"file_size"`
+	FileType   string   `json:"file_type"`
+	CreatedAt  string   `json:"created_at"`
+	Path       string   `json:"path"`
+	Colors     []string `json:"colors"`
 	// Thumbs     []thumb  `json:"thumbs"`
 }
 
@@ -134,8 +134,9 @@ func printDetails(whPhoto photo) {
 	fmt.Printf("Date: %s\n\n", whPhoto.CreatedAt)
 	fmt.Printf("Resolution: %s\n", whPhoto.Resolution)
 	fmt.Printf("Ratio: %s\n", whPhoto.Ratio)
-	// fmt.Printf("Views: %s\n", whPhoto.Views)
-	// fmt.Printf("Favorites: %s\n", whPhoto.Favorites)
+	fmt.Printf("Views: %d\n", whPhoto.Views)
+	fmt.Printf("Favorites: %d\n", whPhoto.Favorites)
+	fmt.Printf("File Size: %d KiB\n", whPhoto.FileSize/1024)
 	fmt.Printf("Category: %s\n", whPhoto.Category)
 }
 
