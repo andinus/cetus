@@ -2,7 +2,6 @@ package cetus
 
 import (
 	"fmt"
-	"log"
 )
 
 var version string = "v0.5.0"

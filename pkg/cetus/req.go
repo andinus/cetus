@@ -8,9 +8,10 @@ import (
 )
 
 // GetRes returns api response
-func GetRes(api string, params map[string]string, t time.Duration) (string, error) {
+func GetRes(api string, params map[string]string) (string, error) {
 	c := http.Client{
-		Timeout: time.Second * t,
+		// TODO: timeout should be configurable by the user
+		Timeout: time.Second * 64,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, api, nil)
