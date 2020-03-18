@@ -38,3 +38,28 @@ demo videos someday.
 | v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
+* Examples
+To learn about all supported flags run "cetus <command> <service> -help"
+(example: cetus set apod -help)
+
+** cetus set
+#+BEGIN_SRC sh
+# set current apod as background
+cetus set apod
+cetus set nasa # same as above
+
+# set current bpod as background
+cetus set bpod
+cetus set bing # same as above
+
+# Currently all services support -random flag (v0.5.0) but this
+# behaviour might change in future, run cetus set <service> -help to
+# know about support flags.
+
+# set random image as background
+cetus set <service> -random
+#+END_SRC
+** cetus fetch
+#+BEGIN_SRC sh
+cetus fetch <service>
+#+END_SRC

@@ -114,7 +114,7 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Println("Usage: cetus <command> <service> [<args>]\n")
+	fmt.Println("Usage: cetus <command> <service> [<flags>]\n")
 	fmt.Println("Commands: ")
 	fmt.Println(" set   Set the latest image as background")
 	fmt.Println(" fetch Fetch the latest image information")
