@@ -14,18 +14,11 @@ stages:
 
 compile:
     stage: build
-    # only:
-    #   refs:
-    #     - web
-    #     - tags
-    #     - master
-    #     - schedules
-    #     - merge_requests
     script:
       - cd $GOPATH/src/$REPO_NAME/cmd/cetus
       - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-openbsd-amd64
       - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-linux-amd64
-      artifacts:
+    artifacts:
       paths:
         - cetus-openbsd-amd64
         - cetus-linux-amd64
