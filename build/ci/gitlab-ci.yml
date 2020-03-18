@@ -14,28 +14,18 @@ stages:
 
 compile:
     stage: build
-    only:
-      refs:
-        - web
-        - tags
-        - master
-        - schedules
-        - merge_requests
+    # only:
+    #   refs:
+    #     - web
+    #     - tags
+    #     - master
+    #     - schedules
+    #     - merge_requests
     script:
-      - cd $GOPATH/src/$REPO_NAME/cmd/cetus-nasa
-      - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-nasa-openbsd-amd64
-      - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-nasa-linux-amd64
-      - cd $GOPATH/src/$REPO_NAME/cmd/cetus-bing
-      - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-bing-openbsd-amd64
-      - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-bing-linux-amd64
-      - cd $GOPATH/src/$REPO_NAME/cmd/cetus-wallhaven
-      - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-wallhaven-openbsd-amd64
-      - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-wallhaven-linux-amd64
-    artifacts:
+      - cd $GOPATH/src/$REPO_NAME/cmd/cetus
+      - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-openbsd-amd64
+      - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-linux-amd64
+      artifacts:
       paths:
-        - cetus-nasa-openbsd-amd64
-        - cetus-nasa-linux-amd64
-        - cetus-bing-openbsd-amd64
-        - cetus-bing-linux-amd64
-        - cetus-wallhaven-openbsd-amd64
-        - cetus-wallhaven-linux-amd64
+        - cetus-openbsd-amd64
+        - cetus-linux-amd64

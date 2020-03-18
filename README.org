@@ -11,129 +11,23 @@ sources for fetching the background.
 | GitHub Mirror | [[https://github.com/andinus/cetus][Cetus - GitHub]]  |
 
 *Note*: Cetus is a work in-progress & many features are yet to be implemented.
+This whole project was changed multiple times, previous versions have had
+support for services like Unsplash Source & Wallhaven. I'm working on this
+because I want my desktop to have a new wallpaper everyday.
 
-*Dependency*: [[https://feh.finalrewind.org/][feh]]
+Cetus v0.5 will support NASA Astronomy Picture of the Day & Bing Photo of the
+Day, I may add support for other services later. Both sources are very easy to
+work with, I personally like NASA APOD & fallback to BPOD only when it's not an
+image (somtimes they choose a video for APOD).
 
-* Bing Photo of the Day
-cetus-bing fetches Bing Photo of the Day.
+Currently the only dependency is [[https://feh.finalrewind.org/][feh]], it is used to set the background. It
+doesn't support some desktop environments but should work fine many others. I
+plan to add support for unsupported DEs too provided they're not hard to
+implement.
 
-** Features
-- set BPOD as background
-- fetch information on BPOD
-- choose random photo
-** Examples
-#+BEGIN_SRC sh
-# set current BPOD as background
-cetus-bing
-
-# set photo randomly
-cetus-bing -random
-
-# change api endpoint
-cetus-bing -api https://www.bing.com/HPImageArchive.aspx
-
-# don't set background, just fetch information
-cetus-bing -fetch-only
-
-# don't set background, just fetch & print only the path (useful in
-# scripts)
-cetus-bing -fetch-only -path-only
-
-# don't output anything
-cetus-bing -quiet
-
-# dump received response
-cetus-bing -dump
-
-# don't set background, just fetch & don't output anything
-cetus-bing -quiet -fetch-only # why would anyone do this?
-
-#+END_SRC
-* NASA Astronomy Picture of the Day
-cetus-nasa uses NASA's API to get the Astronomy Picture of the Day.
-
-*Note*: If the returned media type is not image then cetus-nasa will only print
-details & not try to set background.
-
-** Features
-- set APOD as background
-- fetch information on APOD
-- choose custom date
-- choose date randomly
-** Examples
-#+BEGIN_SRC sh
-# set currently APOD as background
-cetus-nasa
-
-# set date randomly
-cetus-nasa -random
-
-# set 2020-01-05 APOD as background
-cetus-nasa -date 2020-01-05
-
-# 2020-03-15 APOD is a video, cetus will only print details
-cetus-nasa -date 2020-03-15
-
-# change api endpoint & api key
-cetus-nasa -api https://api.nasa.gov/planetary/apod \
-           -api-key DEMO_KEY
-
-# don't set background, just fetch information
-cetus-nasa -fetch-only
-
-# don't set background, just fetch & print only the path (useful in
-# scripts)
-cetus-nasa -fetch-only -path-only
-
-# don't output anything
-cetus-nasa -quiet
-
-# dump received response
-cetus-nasa -dump
-
-# don't set background, just fetch & don't output anything
-cetus-nasa -quiet -fetch-only # why would anyone do this?
-#+END_SRC
-* Wallhaven
-cetus-wallhaven uses Wallhaven's API to get random background.
-
-** Features
-- set random image as background
-- fetch information
-** Examples
-#+BEGIN_SRC sh
-# set a random image as background
-cetus-wallhaven
-
-# same as above
-cetus-wallhaven -random
-
-# change api endpoint & api key
-cetus-wallhaven -api https://wallhaven.cc/api/v1/search \
-           -api-key
-
-# don't set background, just fetch information
-cetus-wallhaven -fetch-only
-
-# don't set background, just fetch & print only the path (useful in
-# scripts)
-cetus-wallhaven -fetch-only -path-only
-
-# don't output anything
-cetus-wallhaven -quiet
-
-# dump received response
-cetus-wallhaven -dump
-
-# don't set background, just fetch & don't output anything
-cetus-wallhaven -quiet -fetch-only # why would anyone do this?
-#+END_SRC
 * Demo
 I just run some cetus commands on my computer, nothing fancy. I'll make better
 demo videos someday.
-
-*Note*: Cetus was restructured multiple times & these demos may not work on the
-latest release.
 
 | Version | Video                                                                |
 |---------+----------------------------------------------------------------------|
@@ -141,24 +35,3 @@ latest release.
 | v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Installation
-** Binary
-framagit.org compiles cetus for OpenBSD & GNU/Linux amd64 on every release, to
-get the binary goto [[https://framagit.org/andinus/cetus/pipelines?scope=tags&page=1][Pipelines - tags]].
-
-To get the latest binary goto [[https://framagit.org/andinus/cetus/pipelines][Pipelines]].
-
-** From Source
-#+BEGIN_SRC sh
-# get master branch archive
-curl -o cetus-master.tar.gz \
-     https://framagit.org/andinus/cetus/-/archive/master/cetus-master.tar.gz
-
-# extract the archive
-tar -xzf cetus-master.tar.gz
-
-# install cetus
-cd cetus-master && \
-    go install ./cmd/cetus-nasa && \
-    go install ./cmd/cetus-bing
-#+END_SRC
