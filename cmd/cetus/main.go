@@ -137,7 +137,7 @@ func execAPOD() {
 	reqInfo["date"] = string(*apodDate)
 
 	if *apodRand {
-		reqInfo["apiKey"] = apod.RandDate()
+		reqInfo["date"] = apod.RandDate()
 	}
 
 	body, err := apod.GetJson(reqInfo)
