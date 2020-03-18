@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"framagit.org/andinus/cetus/pkg/cetus"
+	"framagit.org/andinus/cetus/pkg/request"
 )
 
 type Res struct {
@@ -50,6 +50,6 @@ func GetJson(reqInfo map[string]string) (string, error) {
 
 	}
 
-	body, err := cetus.GetRes(reqInfo["api"], params)
+	body, err := request.GetRes(reqInfo["api"], params)
 	return string(body), err
 }

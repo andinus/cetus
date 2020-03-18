@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"framagit.org/andinus/cetus/pkg/cetus"
+	"framagit.org/andinus/cetus/pkg/request"
 )
 
 // Res holds the response from the api.
@@ -43,6 +43,6 @@ func GetJson(reqInfo map[string]string) (string, error) {
 	params["api_key"] = reqInfo["apiKey"]
 	params["date"] = reqInfo["date"]
 
-	body, err := cetus.GetRes(reqInfo["api"], params)
+	body, err := request.GetRes(reqInfo["api"], params)
 	return string(body), err
 }

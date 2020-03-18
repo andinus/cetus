@@ -10,7 +10,6 @@ import (
 	"framagit.org/andinus/cetus/pkg/apod"
 	"framagit.org/andinus/cetus/pkg/background"
 	"framagit.org/andinus/cetus/pkg/bpod"
-	"framagit.org/andinus/cetus/pkg/cetus"
 )
 
 func main() {
@@ -24,8 +23,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	version := "v0.5.0"
+
 	if os.Args[1] == "version" {
-		cetus.Version()
+		fmt.Printf("Cetus %s\n", version)
 		os.Exit(0)
 	}
 
