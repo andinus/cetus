@@ -23,7 +23,10 @@ image (somtimes they choose a video for APOD).
 Currently the only dependency is [[https://feh.finalrewind.org/][feh]], it is used to set the background. It
 doesn't support some desktop environments but should work fine many others. I
 plan to add support for unsupported DEs too provided they're not hard to
-implement.
+implement. Experimental support for GNOME, Unity, Pantheon & LXDE was added. If
+you're using i3 or similar WM/DE which uses X background then feh should work.
+
+*Tested on*: OpenBSD 6.6 with i3wm
 
 Also the code is not so good, I couldn't think of a good way to structure it. If
 you have a better idea then please let me know.
