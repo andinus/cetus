@@ -15,6 +15,10 @@ This whole project was changed multiple times, previous versions have had
 support for services like Unsplash Source & Wallhaven. I'm working on this
 because I want my desktop to have a new wallpaper everyday.
 
+*Note*: Services were split because they didn't have much in common and it's
+easier to maintain when they're split. The cetus command that bundled services
+will stay as is so as to not break scripts, it will be dropped in v0.6.
+
 Cetus v0.5 will support NASA Astronomy Picture of the Day & Bing Photo of the
 Day, I may add support for other services later. Both sources are very easy to
 work with, I personally like NASA APOD & fallback to BPOD only when it's not an
@@ -40,28 +44,3 @@ demo videos someday.
 | v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Examples
-To learn about all supported flags run "cetus <command> <service> -help"
-(example: cetus set apod -help)
-
-** cetus set
-#+BEGIN_SRC sh
-# set current apod as background
-cetus set apod
-cetus set nasa # same as above
-
-# set current bpod as background
-cetus set bpod
-cetus set bing # same as above
-
-# Currently all services support -random flag (v0.5.0) but this
-# behaviour might change in future, run cetus set <service> -help to
-# know about support flags.
-
-# set random image as background
-cetus set <service> -random
-#+END_SRC
-** cetus fetch
-#+BEGIN_SRC sh
-cetus fetch <service>
-#+END_SRC
