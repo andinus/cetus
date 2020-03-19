@@ -8,6 +8,7 @@ import (
 
 // Set calls feh to set the background
 func Set(path string) error {
+	var err error
 	switch os.Getenv("XDG_CURRENT_DESKTOP") {
 	case "GNOME", "Unity", "Pantheon":
 		path = fmt.Sprintf("%s%s", "file://", path)
