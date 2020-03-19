@@ -25,7 +25,7 @@ doesn't support some desktop environments but should work fine many others. I
 plan to add support for unsupported DEs too provided they're not hard to
 implement.
 
-Also the code is very dirty, I couldn't think of a good way to structure it. If
+Also the code is not so good, I couldn't think of a good way to structure it. If
 you have a better idea then please let me know.
 
 * Demo
