@@ -43,3 +43,15 @@ demo videos someday.
 | v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
 | v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
 | v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
+* Installation
+** Pre-built binaries
+Pre-built binaries are available for OpenBSD, FreeBSD & Linux.
+
+If you don't understand what this command does then don't run it. It doesn't
+download the binary, it will just print the steps to install cetus & you have to
+run those commands manually. Better yet don't pipe it directly to sh but review
+it before running.
+
+#+BEGIN_SRC sh
+curl -s https://framagit.org/andinus/cetus/-/raw/master/scripts/install.sh | sh
+#+END_SRC
