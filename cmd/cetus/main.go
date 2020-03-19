@@ -116,12 +116,27 @@ func main() {
 func printUsage() {
 	fmt.Println("Usage: cetus <command> <service> [<flags>]\n")
 	fmt.Println("Commands: ")
-	fmt.Println(" set   Set the latest image as background")
-	fmt.Println(" fetch Fetch the latest image information")
+	fmt.Println(" set     Set the latest image as background")
+	fmt.Println(" fetch   Fetch the latest image information")
 	fmt.Println(" version Print version")
 	fmt.Println("\nServices: ")
 	fmt.Println(" apod   NASA Astronomy Picture of the Day")
 	fmt.Println(" bpod   Bing Photo of the Day")
+}
+
+// Check whether user has set CETUS_CACHE_DIR, if not then use the
+// XDG_CACHE_HOME. If XDG_CACHE_HOME is not set then $HOME/.config
+// should be used, according to XDG Base Directory Specification
+func getCacheDir() string {
+	cacheDir := os.Getenv("CETUS_CACHE_DIR")
+	if len(cacheDir) == 0 {
+		cacheDir = os.Getenv("XDG_CACHE_HOME")
+	}
+	if len(cacheDir) == 0 {
+		cacheDir = fmt.Sprintf("%s/%s/%s", os.Getenv("HOME"),
+			".cache", "cetus")
+	}
+	return cacheDir
 }
 
 func execAPOD() {
@@ -181,12 +196,28 @@ func execAPOD() {
 		os.Exit(0)
 	}
 
-	// Try to set background only if the media type is an
-	// image.
-	if res.MediaType == "image" {
-		err = background.Set(res.HDURL)
+	// Try to set background only if the media type is an image.
+	// First it downloads the image to the cache directory and
+	// then tries to set it with feh. If the download fails then
+	// it exits with a non-zero exit code.
+	if res.MediaType != "image" {
+		os.Exit(0)
+	}
+	cacheDir := fmt.Sprintf("%s/%s", getCacheDir(), "apod")
+	os.MkdirAll(cacheDir, os.ModePerm)
+	file := fmt.Sprintf("%s/%s", cacheDir, reqInfo["date"])
+
+	// Check if the file is available locally, if it is
+	// then don't download it again and set it from disk
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		err = background.Download(file, res.HDURL)
+		chkErr(err)
+	} else {
 		chkErr(err)
 	}
+
+	err = background.Set(file)
+	chkErr(err)
 }
 
 func execBPOD() {
@@ -242,7 +273,24 @@ func execBPOD() {
 		os.Exit(0)
 	}
 
-	err = background.Set(res.Url)
+	// Try to set background only if the media type is an image.
+	// First it downloads the image to the cache directory and
+	// then tries to set it with feh. If the download fails then
+	// it exits with a non-zero exit code.
+	cacheDir := fmt.Sprintf("%s/%s", getCacheDir(), "bpod")
+	os.MkdirAll(cacheDir, os.ModePerm)
+	file := fmt.Sprintf("%s/%s", cacheDir, res.StartDate)
+
+	// Check if the file is available locally, if it is
+	// then don't download it again and set it from disk
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		err = background.Download(file, res.Url)
+		chkErr(err)
+	} else {
+		chkErr(err)
+	}
+
+	err = background.Set(file)
 	chkErr(err)
 }
 

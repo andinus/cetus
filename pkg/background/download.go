@@ -9,7 +9,7 @@ import (
 
 // Download takes path and url as input and downloads the data to a
 // file, returning an error if there is one
-func Download(file string, url string) (err error) {
+func Download(file string, url string) error {
 	o, err := os.Create(file)
 	if err != nil {
 		return err
