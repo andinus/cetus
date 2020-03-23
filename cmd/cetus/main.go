@@ -22,6 +22,9 @@ var (
 	bpodPathOnly *bool
 	bpodQuiet    *bool
 	bpodDump     *bool
+
+	apodNotify *bool
+	bpodNotify *bool
 )
 
 func main() {
@@ -52,6 +55,8 @@ func main() {
 	rand.Seed(time.Now().Unix())
 
 	apodCmd := flag.NewFlagSet("apod", flag.ExitOnError)
+	bpodCmd := flag.NewFlagSet("bpod", flag.ExitOnError)
+
 	defDate := time.Now().UTC().Format("2006-01-02")
 
 	// Flags to parse for apod service.
@@ -62,8 +67,7 @@ func main() {
 	apodPathOnly = apodCmd.Bool("path-only", false, "Print only the path")
 	apodQuiet = apodCmd.Bool("quiet", false, "Stay quiet")
 	apodDump = apodCmd.Bool("dump", false, "Dump received response")
-
-	bpodCmd := flag.NewFlagSet("bpod", flag.ExitOnError)
+	apodNotify = apodCmd.Bool("notify", false, "Send a desktop notification with background information")
 
 	// Flags to parse for bpod service.
 	bpodAPI = bpodCmd.String("api", "https://www.bing.com/HPImageArchive.aspx", "BPOD API")
@@ -71,6 +75,7 @@ func main() {
 	bpodPathOnly = bpodCmd.Bool("path-only", false, "Print only the path")
 	bpodQuiet = bpodCmd.Bool("quiet", false, "Stay quiet")
 	bpodDump = bpodCmd.Bool("dump", false, "Dump received response")
+	bpodNotify = bpodCmd.Bool("notify", false, "Send a desktop notification with background information")
 
 	// Switching on commands will cause more repetition than
 	// switching on service. If we switch on commands then switch

@@ -8,6 +8,7 @@ import (
 
 	"framagit.org/andinus/cetus/pkg/background"
 	"framagit.org/andinus/cetus/pkg/bpod"
+	"framagit.org/andinus/indus/notification"
 )
 
 func execBPOD() {
@@ -105,6 +106,18 @@ func execBPOD() {
 		fmt.Println(res.Url)
 	} else if !*bpodQuiet {
 		bpod.Print(res)
+	}
+
+	// Send a desktop notification if notify flag was passed
+	if *bpodNotify {
+		n := notification.Notif{}
+		n.Title = res.Title
+		n.Message = fmt.Sprintf("%s\n\n%s",
+			res.StartDate,
+			res.Copyright)
+
+		err = n.Notify()
+		chkErr(err)
 	}
 
 	// Proceed only if the command was set because if it was fetch
