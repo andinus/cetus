@@ -38,7 +38,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	version := "v0.5.1"
+	version := "v0.5.2"
 
 	if os.Args[1] == "version" {
 		fmt.Printf("Cetus %s\n", version)
