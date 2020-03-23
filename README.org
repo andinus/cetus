@@ -20,8 +20,9 @@ Day, I may add support for other services later. Both sources are very easy to
 work with, I personally like NASA APOD & fallback to BPOD only when it's not an
 image (somtimes they choose a video for APOD).
 
-Currently the only dependency is [[https://feh.finalrewind.org/][feh]], it is used to set the background. It
-doesn't support some desktop environments but should work fine many others. I
+Dependency: /feh/, /libnotify/ (optional)
+
+It doesn't support some desktop environments but should work fine many others. I
 plan to add support for unsupported DEs too provided they're not hard to
 implement. Experimental support for GNOME, Unity, Pantheon & LXDE was added. If
 you're using i3 or similar WM/DE which uses X background then feh should work.
