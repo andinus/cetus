@@ -104,6 +104,13 @@ func execBPOD() {
 	res.StartDate = dt.Format("2006-01-02")
 
 	file = fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
+	// Here we are saving the file after unmarshal but causes a
+	// bug in the program. Random flag was passed so 7 images will
+	// be retrieved & 7 will get saved in this json file. This
+	// will cause error when `cetus set bpod -random` is run for
+	// the first time on specific date & then `cetus set bpod` is
+	// run, the second command will set random background because
+	// the first one has downloaded all 7 in the json file.
 	if random {
 		// Write body to the cache so that it can be read
 		// later.
