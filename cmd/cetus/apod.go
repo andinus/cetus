@@ -56,12 +56,12 @@ func execAPOD() {
 				"apod.go: failed to read file to data: ", file,
 				err.Error())
 			log.Println(err)
-			dlAndCacheBody()
+			dlAndCacheAPODBody()
 		}
 		body = string(data)
 
 	} else if os.IsNotExist(err) {
-		dlAndCacheBody()
+		dlAndCacheAPODBody()
 
 	} else {
 		// If file existed then that is handled by the if
@@ -152,7 +152,7 @@ func execAPOD() {
 	}
 }
 
-func dlAndCacheBody() {
+func dlAndCacheAPODBody() {
 	body, err = apod.GetJson(reqInfo)
 	if err != nil {
 		err = fmt.Errorf("%s\n%s",
