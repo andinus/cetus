@@ -19,3 +19,22 @@ i3wm).
 - OpenBSD 6.6 with i3wm
 - Lubuntu 18.04 with LXDE
 - macOS Catalina 10.15.3
+
+* Installation
+** Pre-built binaries
+Pre-built binaries are available for OpenBSD, FreeBSD, NetBSD, DragonFly BSD,
+Linux & macOS.
+
+*Note*: The program compiling on a system doesn't mean that it will work. If you
+ find bugs then please file an issue. I have listed the systems this was tested
+ on above, it should work on all of them. Again no guarantees because tests are
+ done manually currently so I might miss something.
+
+If you don't understand what this command does then don't run it. It doesn't
+download the binary, it will just print the steps to install cetus & you have to
+run those commands manually. Better yet don't pipe it directly to sh but review
+it before running.
+
+#+BEGIN_SRC sh
+curl -s https://tildegit.org/andinus/cetus/raw/branch/master/scripts/install.sh | sh
+#+END_SRC
