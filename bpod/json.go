@@ -54,7 +54,6 @@ func GetJson(reqInfo map[string]string) (string, error) {
 	// if random is true then fetch 7 photos
 	if reqInfo["random"] == "true" {
 		params["n"] = "7"
-
 	}
 
 	body, err := request.GetRes(reqInfo["api"], params)
