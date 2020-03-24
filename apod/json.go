@@ -51,10 +51,11 @@ func GetJson(reqInfo map[string]string) (string, error) {
 		return body, err
 	}
 
-	// reqInfo is map[string]string and params is built from it, currently
-	// it takes apiKey and the date from reqInfo to build param. If any
-	// new key/value is added to reqInfo then it must be addded here too,
-	// it won't be sent as param directly.
+	// reqInfo is map[string]string and params is built from it,
+	// currently it takes apiKey and the date from reqInfo to
+	// build param. If any new key/value is added to reqInfo then
+	// it must be addded here too, it won't be sent as param
+	// directly.
 	params := make(map[string]string)
 	params["api_key"] = reqInfo["apiKey"]
 	params["date"] = reqInfo["date"]
