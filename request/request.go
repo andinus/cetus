@@ -10,8 +10,13 @@ import (
 
 // GetRes takes api and params as input and returns the body and
 // error.
-func (c http.Client) GetRes(api string, params map[string]string) (string, error) {
+func GetRes(api string, params map[string]string) (string, error) {
 	var body string
+
+	c := http.Client{
+		// TODO: timeout should be configurable by the user
+		Timeout: time.Second * 64,
+	}
 
 	req, err := http.NewRequest(http.MethodGet, api, nil)
 	if err != nil {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"framagit.org/andinus/cetus/pkg/request"
+	"tildegit.org/andinus/cetus/request"
 )
 
 // APOD holds the response from the api. Not every field is returned
@@ -27,7 +27,7 @@ type APOD struct {
 }
 
 // UnmarshalJson will take body as input & unmarshal it to res.
-func UnmarshalJson(res *Res, body string) error {
+func UnmarshalJson(res *APOD, body string) error {
 	err := json.Unmarshal([]byte(body), res)
 	if err != nil {
 		err = fmt.Errorf("json.go: unmarshalling json failed\n%s",

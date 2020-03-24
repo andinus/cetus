@@ -22,7 +22,7 @@ func GetDir() string {
 	}
 
 	// Cetus cache directory is cacheDir/cetus.
-	cetusCacheDir = fmt.Sprintf("%s/%s", cacheDir,
+	cetusCacheDir := fmt.Sprintf("%s/%s", cacheDir,
 		"cetus")
 
 	return cetusCacheDir
