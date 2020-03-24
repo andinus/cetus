@@ -24,6 +24,13 @@ func execBPOD() {
 	reqInfo = make(map[string]string)
 	reqInfo["api"] = bpodApi
 
+	// Disable random flag on bpod.
+	if random {
+		log.Println("Random flag on BPOD has been disabled due to a bug")
+		log.Println("https://github.com/andinus/cetus/issues/1")
+		random = false
+	}
+
 	if random {
 		reqInfo["random"] = "true"
 	}
@@ -108,9 +115,16 @@ func execBPOD() {
 	// bug in the program. Random flag was passed so 7 images will
 	// be retrieved & 7 will get saved in this json file. This
 	// will cause error when `cetus set bpod -random` is run for
-	// the first time on specific date & then `cetus set bpod` is
-	// run, the second command will set random background because
-	// the first one has downloaded all 7 in the json file.
+	// the first time on specific date and the same date gets
+	// selected randomly & then `cetus set bpod` is run, the
+	// second command will set random background because the first
+	// one has downloaded all 7 in the json file.
+	//
+	// Solution: Marshal json again but keeping only the selected
+	// date information. This is not a perfect solution, if you
+	// have a better solution then please let me know. For time
+	// being I have to disable random flag in bpod because of this
+	// bug.
 	if random {
 		// Write body to the cache so that it can be read
 		// later.

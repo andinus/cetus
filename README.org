@@ -40,6 +40,11 @@ download the binary, it will just print the steps to install cetus & you have to
 run those commands manually. Better yet don't pipe it directly to sh but review
 it before running.
 
+*Warning*: Don't use random flag on BPOD, it has been disabled in v0.6.1 but
+v0.6.0 will cause issues if random flag is used with BPOD.
+
+=cetus set bpod -random # don't do this=
+
 #+BEGIN_SRC sh
 curl -s https://tildegit.org/andinus/cetus/raw/branch/master/scripts/install.sh | sh
 #+END_SRC
