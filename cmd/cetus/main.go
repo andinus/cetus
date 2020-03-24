@@ -15,8 +15,12 @@ var (
 	notify  bool
 	print   bool
 
+	err     error
+	body    string
+	file    string
+	reqInfo map[string]string
+
 	apodDate string
-	// bpodApi string = getEnv("BPOD_API", "https://www.bing.com/HPImageArchive.aspx")
 )
 
 func main() {
@@ -85,9 +89,9 @@ func parseArgs() {
 		cetus.Parse(os.Args[3:])
 
 		execAPOD()
-	// case "bpod", "bing":
-	// 	parseFlags()
-	// 	execBPOD()
+	case "bpod", "bing":
+		cetus.Parse(os.Args[3:])
+		execBPOD()
 	default:
 		fmt.Printf("Invalid service: %q\n", os.Args[2])
 		printUsage()

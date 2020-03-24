@@ -12,13 +12,6 @@ import (
 	"tildegit.org/andinus/cetus/notification"
 )
 
-var (
-	err     error
-	body    string
-	file    string
-	reqInfo map[string]string
-)
-
 func execAPOD() {
 	apodApi := getEnv("APOD_API", "https://api.nasa.gov/planetary/apod")
 	apodKey := getEnv("APOD_KEY", "DEMO_KEY")

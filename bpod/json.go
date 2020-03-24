@@ -27,9 +27,9 @@ type List struct {
 }
 
 // UnmarshalJson will take body as input & unmarshal it to res,
-func UnmarshalJson(body string) (Res, error) {
+func UnmarshalJson(body string) (BPOD, error) {
 	list := List{}
-	res := Res{}
+	res := BPOD{}
 
 	err := json.Unmarshal([]byte(body), &list)
 	if err != nil {
