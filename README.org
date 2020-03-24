@@ -15,11 +15,6 @@ This whole project was changed multiple times, previous versions have had
 support for services like Unsplash Source & Wallhaven. I'm working on this
 because I want my desktop to have a new wallpaper everyday.
 
-Cetus v0.5 will support NASA Astronomy Picture of the Day & Bing Photo of the
-Day, I may add support for other services later. Both sources are very easy to
-work with, I personally like NASA APOD & fallback to BPOD only when it's not an
-image (somtimes they choose a video for APOD).
-
 Dependency: /feh/, /libnotify/ (optional)
 
 It doesn't support some desktop environments but should work fine many others. I
@@ -27,7 +22,10 @@ plan to add support for unsupported DEs too provided they're not hard to
 implement. Experimental support for GNOME, Unity, Pantheon & LXDE was added. If
 you're using i3 or similar WM/DE which uses X background then feh should work.
 
-*Tested on*: OpenBSD 6.6 with i3wm
+*Tested on*:
+- OpenBSD 6.6 with i3wm
+- Lubuntu 18.04 with LXDE
+- macOS Catalina 10.15.3
 
 Also the code is not so good, I couldn't think of a good way to structure it. If
 you have a better idea then please let me know.
