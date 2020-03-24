@@ -6,52 +6,16 @@
 Cetus is a simple wallpaper management tool written in Go. It supports multiple
 sources for fetching the background.
 
-| Project Home  | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
-| Source Code   | [[https://framagit.org/andinus/cetus][Andinus / Cetus]] |
-| GitHub Mirror | [[https://github.com/andinus/cetus][Cetus - GitHub]]  |
-
-*Note*: Cetus is a work in-progress & many features are yet to be implemented.
-This whole project was changed multiple times, previous versions have had
-support for services like Unsplash Source & Wallhaven. I'm working on this
-because I want my desktop to have a new wallpaper everyday.
+| Project Home    | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
+| Source Code     | [[https://tildegit.org/andinus/cetus][Andinus / Cetus]] |
+| GitHub (Mirror) | [[https://github.com/andinus/cetus][Cetus - GitHub]]  |
 
 Dependency: /feh/, /libnotify/ (optional)
 
-It doesn't support some desktop environments but should work fine many others. I
-plan to add support for unsupported DEs too provided they're not hard to
-implement. Experimental support for GNOME, Unity, Pantheon & LXDE was added. If
-you're using i3 or similar WM/DE which uses X background then feh should work.
+It supports /GNOME/, /Unity/, /LXDE/, /Pantheon/ & WM/DE similar to /i3wm/ (including
+i3wm).
 
 *Tested on*:
 - OpenBSD 6.6 with i3wm
 - Lubuntu 18.04 with LXDE
 - macOS Catalina 10.15.3
-
-Also the code is not so good, I couldn't think of a good way to structure it. If
-you have a better idea then please let me know.
-
-* Demo
-I just run some cetus commands on my computer, nothing fancy. I'll make better
-demo videos someday.
-
-| Version | Video                                                                |
-|---------+----------------------------------------------------------------------|
-| v0.5.2  | https://diode.zone/videos/watch/95dc4ba1-e40f-431a-b48b-81c63046b9a2 |
-| v0.5.1  | https://diode.zone/videos/watch/0f94f5df-432d-491b-b7ab-57129213e47f |
-| v0.5.0  | https://diode.zone/videos/watch/82b4f048-47aa-4012-8281-61e23840a598 |
-| v0.4.6  | https://diode.zone/videos/watch/965bb7a4-029a-4584-a40d-241959d1aced |
-| v0.4.1  | https://diode.zone/videos/watch/a52cc728-93e5-4bba-9375-752e1dba306d |
-| v0.3.1  | https://diode.zone/videos/watch/0808c512-315a-4dab-9526-4a537e8c3257 |
-| v0.2.0  | https://diode.zone/videos/watch/12db31e1-3517-4888-ad06-55f3859447a1 |
-* Installation
-** Pre-built binaries
-Pre-built binaries are available for OpenBSD, FreeBSD & Linux.
-
-If you don't understand what this command does then don't run it. It doesn't
-download the binary, it will just print the steps to install cetus & you have to
-run those commands manually. Better yet don't pipe it directly to sh but review
-it before running.
-
-#+BEGIN_SRC sh
-curl -s https://framagit.org/andinus/cetus/-/raw/master/scripts/install.sh | sh
-#+END_SRC
