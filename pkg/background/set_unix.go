@@ -1,3 +1,5 @@
+// +build linux netbsd openbsd freebsd dragonfly
+
 package background
 
 import (

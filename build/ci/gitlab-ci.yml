@@ -18,7 +18,9 @@ compile:
       - cd $GOPATH/src/$REPO_NAME/cmd/cetus
       - GOOS=openbsd GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-openbsd-amd64
       - GOOS=linux GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-linux-amd64
+      - GOOS=darwin GOARCH=amd64 go build -o $CI_PROJECT_DIR/cetus-darwin-amd64
     artifacts:
       paths:
         - cetus-openbsd-amd64
         - cetus-linux-amd64
+        - cetus-darwin-amd64
