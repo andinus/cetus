@@ -66,7 +66,7 @@ func execAPOD() {
 	}
 
 	if dump {
-		fmt.Printf(body)
+		fmt.Println(body)
 	}
 
 	res := apod.APOD{}

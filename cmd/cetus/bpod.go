@@ -108,7 +108,7 @@ func execBPOD() {
 	file = fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
 
 	if dump {
-		fmt.Printf(body)
+		fmt.Println(body)
 	}
 
 	// Send a desktop notification if notify flag was passed.
