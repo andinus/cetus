@@ -26,6 +26,25 @@ type List struct {
 	Photos []BPOD `json:"images"`
 }
 
+// MarshalJson takes res as input and returns body. This remarshaling
+// is required because of a bug. To learn about why this is required,
+// remove this function & then run `cetus set bpod -random`. Put a
+// `fmt.Println(res, body)` somewhere and look at how they differ. res
+// will contain a single entry but body will have all 7 entries which
+// is bad because body is cached to disk to view later. Look at
+// comment in UnmarshalJson func to understand why res has a single
+// entry and body has all when random flag is passed.
+func MarshalJson(res BPOD) (string, error) {
+	out, err := json.Marshal(res)
+	if err != nil {
+		err = fmt.Errorf("%s\n%s",
+			"MarshalJson failed",
+			err.Error())
+	}
+	body := string(out)
+	return body, err
+}
+
 // UnmarshalJson will take body as input & unmarshal it to res,
 func UnmarshalJson(body string) (BPOD, error) {
 	list := List{}
@@ -36,6 +55,15 @@ func UnmarshalJson(body string) (BPOD, error) {
 		return res, fmt.Errorf("UnmarshalJson failed\n%s", err.Error())
 	}
 
+	// If random flag was not passed then list.Photos has only one
+	// entry and that will get selected because it's only one, in
+	// that case this rand.Intn wrap is stupid but when user
+	// passes the random flag then this wrap will return a single
+	// entry, which means we don't have to create another func to
+	// select random entry but this means that body and res are
+	// out of sync now, because res has only one entry but body
+	// still has all entries so we Marshal res into body with
+	// MarshalJson func.
 	res = list.Photos[rand.Intn(len(list.Photos))]
 	return res, nil
 }

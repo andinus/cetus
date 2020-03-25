@@ -68,6 +68,8 @@ it before running.
 *Warning*: Don't use random flag on BPOD, it has been disabled in v0.6.1 but
 v0.6.0 will cause issues if random flag is used with BPOD.
 
+*Update*: This bug was fixed in v0.6.2, pre-built binary not yet uploaded.
+
 =cetus set bpod -random # don't do this=
 
 #+BEGIN_SRC sh

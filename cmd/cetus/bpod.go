@@ -24,13 +24,6 @@ func execBPOD() {
 	reqInfo = make(map[string]string)
 	reqInfo["api"] = bpodApi
 
-	// Disable random flag on bpod.
-	if random {
-		log.Println("Random flag on BPOD has been disabled due to a bug")
-		log.Println("https://github.com/andinus/cetus/issues/1")
-		random = false
-	}
-
 	if random {
 		reqInfo["random"] = "true"
 	}
@@ -102,6 +95,36 @@ func execBPOD() {
 		log.Fatal(err)
 	}
 
+	// res and body are out of sync if random was passed because
+	// body has all 7 entries but res has only one because
+	// UnmarshalJson returns only one entry selected randomly.
+	// Look at comment in UnmarshalJson and MarshalJson to
+	// understand why this is required.
+	if random {
+		body, err = bpod.MarshalJson(res)
+
+		// If an error was caused then that means body and res
+		// is still out of sync which is not a big issue and
+		// program shouldn't stop because of this, instead we
+		// set random=false so that this body doesn't get
+		// saved to cache and also add warning if user passed
+		// the dump flag because dump is dumping body which
+		// has all 7 entries.
+		if err != nil {
+			err = fmt.Errorf("%s\n%s",
+				"bpod.go: failed to marshal res to body, both out of sync",
+				err.Error())
+			log.Println(err)
+
+			log.Println("bpod.go: not saving this to cache")
+			log.Println("bpod.go: dump will contain incorrect information")
+
+			// This will prevent the program from saving
+			// this to cache.
+			random = false
+		}
+	}
+
 	// Correct format
 	res.URL = fmt.Sprintf("%s%s", "https://www.bing.com", res.URL)
 	dt, err := time.Parse("20060102", res.StartDate)
@@ -111,21 +134,8 @@ func execBPOD() {
 	res.StartDate = dt.Format("2006-01-02")
 
 	file = fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
-	// Here we are saving the file after unmarshal but causes a
-	// bug in the program. Random flag was passed so 7 images will
-	// be retrieved & 7 will get saved in this json file. This
-	// will cause error when `cetus set bpod -random` is run for
-	// the first time on specific date and the same date gets
-	// selected randomly & then `cetus set bpod` is run, the
-	// second command will set random background because the first
-	// one has downloaded all 7 in the json file.
-	//
-	// Solution: Marshal json again but keeping only the selected
-	// date information. This is not a perfect solution, if you
-	// have a better solution then please let me know. For time
-	// being I have to disable random flag in bpod because of this
-	// bug.
 	if random {
+
 		// Write body to the cache so that it can be read
 		// later.
 		err = ioutil.WriteFile(file, []byte(body), 0644)
