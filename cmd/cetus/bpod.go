@@ -88,10 +88,11 @@ func execBPOD() {
 		}
 
 	}
-	// Unmarshal before dump because otherwise if we come across
-	// the date for the first time then it would just dump and
-	// exit without saving it to cache. This way we first save it
-	// to cache if *bpodRand is true.
+
+	if dump {
+		fmt.Println(body)
+	}
+
 	res, err := bpod.UnmarshalJson(body)
 	if err != nil {
 		log.Fatal(err)
@@ -106,10 +107,6 @@ func execBPOD() {
 	res.StartDate = dt.Format("2006-01-02")
 
 	file = fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
-
-	if dump {
-		fmt.Println(body)
-	}
 
 	// Send a desktop notification if notify flag was passed.
 	if notify {
