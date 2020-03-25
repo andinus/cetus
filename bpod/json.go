@@ -36,15 +36,6 @@ func UnmarshalJson(body string) (BPOD, error) {
 		return res, fmt.Errorf("UnmarshalJson failed\n%s", err.Error())
 	}
 
-	// If random flag was not passed then list.Photos has only one
-	// entry and that will get selected because it's only one, in
-	// that case this rand.Intn wrap is stupid but when user
-	// passes the random flag then this wrap will return a single
-	// entry, which means we don't have to create another func to
-	// select random entry but this means that body and res are
-	// out of sync now, because res has only one entry but body
-	// still has all entries so we Marshal res into body with
-	// MarshalJson func.
 	res = list.Photos[rand.Intn(len(list.Photos))]
 	return res, nil
 }
