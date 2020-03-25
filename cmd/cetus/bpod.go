@@ -76,7 +76,9 @@ func execBPOD() {
 	} else {
 		// If random then get the file and save it to disk
 		// after unmarshal because we don't know the file name
-		// yet
+		// yet. Caching on random was disabled because the
+		// solution was very hacky and inconsistent with
+		// caching on random = false.
 		body, err = bpod.GetJson(reqInfo)
 		if err != nil {
 			err = fmt.Errorf("%s\n%s",
@@ -95,36 +97,6 @@ func execBPOD() {
 		log.Fatal(err)
 	}
 
-	// res and body are out of sync if random was passed because
-	// body has all 7 entries but res has only one because
-	// UnmarshalJson returns only one entry selected randomly.
-	// Look at comment in UnmarshalJson and MarshalJson to
-	// understand why this is required.
-	if random {
-		body, err = bpod.MarshalJson(res)
-
-		// If an error was caused then that means body and res
-		// is still out of sync which is not a big issue and
-		// program shouldn't stop because of this, instead we
-		// set random=false so that this body doesn't get
-		// saved to cache and also add warning if user passed
-		// the dump flag because dump is dumping body which
-		// has all 7 entries.
-		if err != nil {
-			err = fmt.Errorf("%s\n%s",
-				"bpod.go: failed to marshal res to body, both out of sync",
-				err.Error())
-			log.Println(err)
-
-			log.Println("bpod.go: not saving this to cache")
-			log.Println("bpod.go: dump will contain incorrect information")
-
-			// This will prevent the program from saving
-			// this to cache.
-			random = false
-		}
-	}
-
 	// Correct format
 	res.URL = fmt.Sprintf("%s%s", "https://www.bing.com", res.URL)
 	dt, err := time.Parse("20060102", res.StartDate)
@@ -134,23 +106,6 @@ func execBPOD() {
 	res.StartDate = dt.Format("2006-01-02")
 
 	file = fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
-	if random {
-
-		// Write body to the cache so that it can be read
-		// later.
-		err = ioutil.WriteFile(file, []byte(body), 0644)
-
-		// Not being able to write to the cache file is a
-		// small error and the program shouldn't exit but
-		// should continue after printing the log so that the
-		// user can investigate it later.
-		if err != nil {
-			err = fmt.Errorf("%s\n%s",
-				"bpod.go: failed to write body to file: ", file,
-				err.Error())
-			log.Println(err)
-		}
-	}
 
 	if dump {
 		fmt.Printf(body)
@@ -219,27 +174,16 @@ func dlAndCacheBPODBody() {
 		log.Fatal(err)
 	}
 
-	// Write body to the cache so that it can be read later. This
-	// will mess up the cache because the cache format will be
-	// inconsistent, res is not the same as body and they should
-	// be in sync before saving body to cache but here we don't
-	// yet have res. This issue arises when the user passes random
-	// flag, we are saving to cache the raw body returned but when
-	// random is passed the format of body is changed to only
-	// values unmarshalled in res because body is rebuilt from res
-	// so the cache will have different format of body. Disabling
-	// this cache for now seems like a good option, later we can
-	// figure out how to make this body and body when random is
-	// passed of same format.
-	// err = ioutil.WriteFile(file, []byte(body), 0644)
+	// Write body to the cache so that it can be read later.
+	err = ioutil.WriteFile(file, []byte(body), 0644)
 
 	// Not being able to write to the cache file is a small error
 	// and the program shouldn't exit but should continue after
 	// printing the log so that the user can investigate it later.
-	// if err != nil {
-	// 	err = fmt.Errorf("%s\n%s",
-	// 		"bpod.go: failed to write body to file: ", file,
-	// 		err.Error())
-	// 	log.Println(err)
-	// }
+	if err != nil {
+		err = fmt.Errorf("%s\n%s",
+			"bpod.go: failed to write body to file: ", file,
+			err.Error())
+		log.Println(err)
+	}
 }
