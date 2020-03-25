@@ -219,16 +219,27 @@ func dlAndCacheBPODBody() {
 		log.Fatal(err)
 	}
 
-	// Write body to the cache so that it can be read later.
-	err = ioutil.WriteFile(file, []byte(body), 0644)
+	// Write body to the cache so that it can be read later. This
+	// will mess up the cache because the cache format will be
+	// inconsistent, res is not the same as body and they should
+	// be in sync before saving body to cache but here we don't
+	// yet have res. This issue arises when the user passes random
+	// flag, we are saving to cache the raw body returned but when
+	// random is passed the format of body is changed to only
+	// values unmarshalled in res because body is rebuilt from res
+	// so the cache will have different format of body. Disabling
+	// this cache for now seems like a good option, later we can
+	// figure out how to make this body and body when random is
+	// passed of same format.
+	// err = ioutil.WriteFile(file, []byte(body), 0644)
 
 	// Not being able to write to the cache file is a small error
 	// and the program shouldn't exit but should continue after
 	// printing the log so that the user can investigate it later.
-	if err != nil {
-		err = fmt.Errorf("%s\n%s",
-			"bpod.go: failed to write body to file: ", file,
-			err.Error())
-		log.Println(err)
-	}
+	// if err != nil {
+	// 	err = fmt.Errorf("%s\n%s",
+	// 		"bpod.go: failed to write body to file: ", file,
+	// 		err.Error())
+	// 	log.Println(err)
+	// }
 }
