@@ -4,7 +4,8 @@
 #+TITLE: Cetus
 
 Cetus is a simple wallpaper management tool written in Go. It supports multiple
-sources for fetching the background.
+sources for fetching the background. Currently it suports NASA Astronomy Picture
+of the Day & Bing Photo of the Day.
 
 | Project Home    | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
 | Source Code     | [[https://tildegit.org/andinus/cetus][Andinus / Cetus]] |
@@ -15,7 +16,7 @@ sources for fetching the background.
 | [[https://diode.zone/videos/watch/11af8886-7b75-400b-9c4d-05191bd55059][Cetus v0.6.0]]               |
 | [[https://diode.zone/videos/watch/6d01245d-a6d0-4958-881d-f6df609d65ab][Cetus v0.6.0 Demo on macOS]] |
 
-Dependency: /feh/, /libnotify/ (optional)
+*Dependency*: /feh/, /libnotify/ (optional)
 
 It supports /GNOME/, /Unity/, /LXDE/, /Pantheon/ & WM/DE similar to /i3wm/ (including
 i3wm).
@@ -24,6 +25,30 @@ i3wm).
 - OpenBSD 6.6 with i3wm
 - Lubuntu 18.04 with LXDE
 - macOS Catalina 10.15.3
+
+* Examples
+Run =cetus help= to get the usage printed & =cetus <command> <service> -help= to get
+the flags for that particular service.
+
+#+BEGIN_SRC sh
+# set today's image as background
+cetus set <service>  # <service>: apod, bpod
+
+# set a random apod image as background
+cetus set apod -random
+
+# send a desktop notification
+cetus <command> <service> -notify # <command>: set, fetch
+
+# don't set background but fetch the information
+cetus fetch <service>
+
+# print details in terminal
+cetus <command> <service> -print
+
+# print and notify
+cetus <command> <service> -print -notify
+#+END_SRC
 
 * Installation
 ** Pre-built binaries
@@ -39,7 +64,7 @@ If you don't understand what this command does then don't run it. It doesn't
 download the binary, it will just print the steps to install cetus & you have to
 run those commands manually. Better yet don't pipe it directly to sh but review
 it before running.
-
+*** v0.6.0
 *Warning*: Don't use random flag on BPOD, it has been disabled in v0.6.1 but
 v0.6.0 will cause issues if random flag is used with BPOD.
 
