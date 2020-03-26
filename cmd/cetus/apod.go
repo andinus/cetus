@@ -161,7 +161,7 @@ func dlAndCacheAPODBody() {
 	// and the program shouldn't exit but should continue after
 	// printing the log so that the user can investigate it later.
 	if err != nil {
-		err = fmt.Errorf("%s\n%s",
+		err = fmt.Errorf("%s%s\n%s",
 			"apod.go: failed to write body to file: ", file,
 			err.Error())
 		log.Println(err)
