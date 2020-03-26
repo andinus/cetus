@@ -9,6 +9,7 @@ steps:
     GOARCH: amd64
     GOOS: openbsd
   commands:
+  - go test -v ./...
   - go build ./cmd/cetus
 
 - name: build-linux
@@ -17,6 +18,7 @@ steps:
     GOARCH: amd64
     GOOS: linux
   commands:
+  - go test -v ./...
   - go build ./cmd/cetus
 
 - name: build-darwin
@@ -25,4 +27,5 @@ steps:
     GOARCH: amd64
     GOOS: darwin
   commands:
+  - go test -v ./...
   - go build ./cmd/cetus
