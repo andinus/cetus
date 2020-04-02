@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -55,6 +56,25 @@ func execBPOD() {
 	}
 	res.StartDate = dt.Format("2006-01-02")
 
+	// Save response in cache after marshalling it again, we do
+	// this instead of saving the response so as to not break the
+	// format in which cache is saved. If random flag was passed
+	// then the response will contain all 7 values so we have to
+	// marshal it but why not save non-random directly? Because
+	// that means the format in which both are saved will be
+	// different. One will be the raw response whereas other will
+	// be marshalled response. We're currently not using this body
+	// cache but this is just to save information.
+	file := fmt.Sprintf("%s/%s.json", cacheDir, res.StartDate)
+	body, err = bpod.MarshalJson(res)
+	if err != nil {
+		// We should warn the user if this returns an error
+		// but the program shouldn't exit.
+		log.Println("bpod.go: failed to marshal res to body, not saving cache")
+	} else {
+		err = ioutil.WriteFile(file, []byte(body), 0644)
+	}
+
 	// Send a desktop notification if notify flag was passed.
 	if notify {
 		n := notification.Notif{}
@@ -87,7 +107,7 @@ func execBPOD() {
 	// First it downloads the image to the cache directory and
 	// then tries to set it with feh. If the download fails then
 	// it exits with a non-zero exit code.
-	imgFile := fmt.Sprintf("%s/%s:%s", cacheDir, res.StartDate, res.Title)
+	imgFile := fmt.Sprintf("%s/%s", cacheDir, res.Title)
 
 	// Check if the file is available locally, if it is then don't
 	// download it again and set it from disk

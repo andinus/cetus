@@ -26,6 +26,23 @@ type List struct {
 	Photos []BPOD `json:"images"`
 }
 
+// MarshalJson takes res as input and returns body. This remarshaling
+// is required because of a bug. To learn about why this is required,
+// remove this function & then run `cetus set bpod -random`. Put a
+// `fmt.Println(res, body)` somewhere and look at how they differ. res
+// will contain a single entry but body will have all 7 entries which
+// is bad because body is cached to disk to view later.
+func MarshalJson(res BPOD) (string, error) {
+	out, err := json.Marshal(res)
+	if err != nil {
+		err = fmt.Errorf("%s\n%s",
+			"MarshalJson failed",
+			err.Error())
+	}
+	body := string(out)
+	return body, err
+}
+
 // UnmarshalJson will take body as input & unmarshal it to res,
 func UnmarshalJson(body string) (BPOD, error) {
 	list := List{}
