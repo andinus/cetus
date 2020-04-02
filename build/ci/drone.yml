@@ -1,38 +1,43 @@
 ---
 kind: pipeline
-name: go-test
+name: testing
 
 steps:
+- name: vet
+  image: golang:1.13
+  commands:
+    - go vet ./...
+
 - name: test
   image: golang:1.13
   commands:
-  - go test -v ./...
+    - go test -v ./...
 
 ---
 kind: pipeline
-name: go-build
+name: build
 
 steps:
-- name: build-obsd
+- name: openbsd-amd64
   image: golang:1.13
   environment:
     GOARCH: amd64
     GOOS: openbsd
   commands:
-  - go build ./cmd/cetus
+    - go build ./cmd/cetus
 
-- name: build-linux
+- name: linux-amd64
   image: golang:1.13
   environment:
     GOARCH: amd64
     GOOS: linux
   commands:
-  - go build ./cmd/cetus
+    - go build ./cmd/cetus
 
-- name: build-darwin
+- name: darwin-amd64
   image: golang:1.13
   environment:
     GOARCH: amd64
     GOOS: darwin
   commands:
-  - go build ./cmd/cetus
+    - go build ./cmd/cetus
