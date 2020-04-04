@@ -1,11 +1,11 @@
 #!/bin/sh
 
-freebsdH="b14b8e41892ec7b7f6a8faa0c868927f68e300b3cda36e1af79683c3313daed7"
-openbsdH="5c6105233b886327699a571e1ed48c434124e94dfa4e08e1b8348a46da7ad1b2"
-linuxH="79b15576fb37ef78ffb424e414eec483c40d237ea40e8234235fa5b1a322a3b2"
-netbsdH="b66ce80fca51cce56b2c48723a5bfb137ef378836062f5054b5e447fc183967f"
-dragonflyH="8eeebfebc71cba05eff71f3b38ab5b60e1c1334730083b3705ba463845034fb8"
-darwinH="bd46b41a86a19c74d791240ae241a0784b7fbd3920c85ac12d1f51f0d741981f"
+freebsdH="47913c8eebb2481bf1282535231cc82793c345ad4c0f382af50e1d7760f5ad32"
+openbsdH="2abdad0520faff64cd3bdf92e194eaf9bafe1866dcde0b432f2a7e288a0806df"
+linuxH="cba19402714d27ce64e57edecab9acc502542c1abb828ad9c5bd7db4241b0ff0"
+netbsdH="d1346f5478931f21d6a9764287230d9362f312c91836773f6a795c7dcc77791c"
+dragonflyH="88ba5cd45abf7a16e6ac3aee8d6e2403e700ed170c6f2191f4474e218cc31cb6"
+darwinH="aea04ff4b027ca7d32d4cf56bdabd2cb3bc0f466ecc634cad0590b9ae774feb6"
 
 earlyCheck(){
     os=`uname`
@@ -33,7 +33,7 @@ earlyCheck(){
 }
 
 getURL(){
-    url="https://archive.org/download/cetus-v0.6.0/cetus-v0.6.0-$os-$cpu"
+    url="https://archive.org/download/cetus-v0.6.4/cetus-v0.6.4-$os-$cpu"
 }
 
 printURL(){
@@ -70,7 +70,7 @@ printURL(){
     echo "$ sha256 /usr/local/bin/cetus"
 }
 
-echo "Cetus v0.6.0"
+echo "Cetus v0.6.4"
 echo
 earlyCheck
 getURL
