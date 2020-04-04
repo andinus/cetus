@@ -12,6 +12,18 @@ import (
 // that is not set then assume it to be the default value which is
 // $HOME/.cache according to XDG Base Directory Specification.
 func GetDir() string {
+	cacheDir := Dir()
+
+	// Cetus cache directory is cacheDir/cetus.
+	cetusCacheDir := fmt.Sprintf("%s/%s", cacheDir,
+		"cetus")
+
+	return cetusCacheDir
+}
+
+// Dir returns the system cache directory, this is useful for unveil
+// in OpenBSD.
+func Dir() string {
 	cacheDir := os.Getenv("CETUS_CACHE_DIR")
 	if len(cacheDir) == 0 {
 		cacheDir = os.Getenv("XDG_CACHE_HOME")
@@ -21,9 +33,5 @@ func GetDir() string {
 			".cache")
 	}
 
-	// Cetus cache directory is cacheDir/cetus.
-	cetusCacheDir := fmt.Sprintf("%s/%s", cacheDir,
-		"cetus")
-
-	return cetusCacheDir
+	return cacheDir
 }

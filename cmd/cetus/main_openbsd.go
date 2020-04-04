@@ -19,27 +19,22 @@ func main() {
 func unveil() {
 	unveilL := make(map[string]string)
 
-	unveilL[cache.GetDir()] = "rwc"
-	unveilL["/dev/null"] = "rw" // required by feh
+	// We unveil the whole cache directory.
+	err = unix.Unveil(cache.Dir(), "rwc")
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	unveilL["/dev/null"] = "rw" // required by feh
 	unveilL["/etc/resolv.conf"] = "r"
 
 	// ktrace output
 	unveilL["/usr/libexec/ld.so"] = "r"
 	unveilL["/var/run/ld.so.hints"] = "r"
-	unveilL["/usr/lib/libpthread.so.26.1"] = "r"
-	unveilL["/usr/lib/libc.so.95.1"] = "r"
+	unveilL["/usr/lib"] = "r"
 	unveilL["/dev/urandom"] = "r"
-	unveilL["/etc/mdns.allow"] = "r"
 	unveilL["/etc/hosts"] = "r"
-	unveilL["/usr/local/etc/ssl/cert.pem"] = "r"
-	unveilL["/etc/ssl/cert.pem"] = "r"
-	unveilL["/etc/ssl/certs"] = "r"
-	unveilL["/system/etc/security/cacerts"] = "r"
-	unveilL["/usr/local/share/certs"] = "r"
-	unveilL["/etc/pki/tls/certs"] = "r"
-	unveilL["/etc/openssl/certs"] = "r"
-	unveilL["/var/ssl/certs"] = "r"
+	unveilL["/etc/ssl"] = "r"
 
 	for k, v := range unveilL {
 		err = unix.Unveil(k, v)
