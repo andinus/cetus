@@ -23,8 +23,7 @@ var (
 	apodDate string
 )
 
-func main() {
-
+func app() {
 	// Early Check: If command was not passed then print usage and
 	// exit. Later command & service both are checked, this check
 	// is for version command. If not checked then running cetus
