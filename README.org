@@ -64,7 +64,8 @@ curl -s https://tildegit.org/andinus/cetus/raw/tag/v0.6.4/scripts/install.sh | s
 #+END_SRC
 *** v0.6.0
 *Warning*: Don't use random flag on BPOD, it has been disabled in v0.6.1 but
-v0.6.0 will cause issues if random flag is used with BPOD.
+v0.6.0 will cause issues if random flag is used with BPOD. This was fixed in
+newer versions.
 
 =cetus set bpod -random # don't do this=
 

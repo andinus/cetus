@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	version string = "v0.6.4"
+	version string = "v0.6.5"
 	dump    bool
 	random  bool
 	notify  bool

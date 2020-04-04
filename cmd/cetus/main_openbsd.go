@@ -38,7 +38,9 @@ func unveil() {
 
 	for k, v := range unveilL {
 		err = unix.Unveil(k, v)
-		if err != nil && err.Error() != "no such file or directory" {
+		if err != nil && err.Error() == "no such file or directory" {
+			log.Printf("WARN: Unveil failed on %s", k)
+		} else if err != nil {
 			log.Fatal(fmt.Sprintf("%s :: %s\n%s", k, v,
 				err.Error()))
 		}
