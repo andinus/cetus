@@ -7,7 +7,7 @@ Cetus is a simple wallpaper management tool written in Go. It supports multiple
 sources for fetching the background. Currently it suports NASA Astronomy Picture
 of the Day & Bing Photo of the Day.
 
-| Project Home    | [[https://andinus.nand.sh/projects/cetus/][Cetus]]           |
+| Project Home    | [[https://andinus.nand.sh/cetus/][Cetus]]           |
 | Source Code     | [[https://tildegit.org/andinus/cetus][Andinus / Cetus]] |
 | GitHub (Mirror) | [[https://github.com/andinus/cetus][Cetus - GitHub]]  |
 
