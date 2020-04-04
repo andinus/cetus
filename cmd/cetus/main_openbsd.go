@@ -19,7 +19,7 @@ func main() {
 func unveil() {
 	unveilL := make(map[string]string)
 
-	unveilL[cache.GetDir()] = "rw"
+	unveilL[cache.GetDir()] = "rwc"
 	unveilL["/dev/null"] = "rw" // required by feh
 
 	unveilL["/etc/resolv.conf"] = "r"
