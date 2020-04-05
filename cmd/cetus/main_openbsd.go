@@ -46,12 +46,12 @@ func unveil() {
 		}
 	}
 
-	err = unveilCmd("feh")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = unveilCmd("notify-send")
+	err = unveilCmds([]string{
+		"feh",
+		"gsettings",
+		"pcmanfm",
+		"notify-send",
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,14 +63,19 @@ func unveil() {
 	}
 }
 
-// unveilCmd will unveil commands.
-func unveilCmd(cmd string) error {
+// unveilCmds will unveil commands.
+func unveilCmds(cmds []string) error {
 	pathList := strings.Split(getEnv("PATH", ""), ":")
-	for _, path := range pathList {
-		err = unix.Unveil(fmt.Sprintf("%s/%s", path, cmd), "rx")
+	// Unveil each command.
+	for _, cmd := range cmds {
+		for _, path := range pathList {
+			err = unix.Unveil(fmt.Sprintf("%s/%s", path, cmd), "rx")
 
-		if err != nil && err.Error() != "no such file or directory" {
-			return err
+			if err != nil && err.Error() != "no such file or directory" {
+				return fmt.Errorf("%s\n%s",
+					cmd,
+					err.Error())
+			}
 		}
 	}
 	return nil
