@@ -51,6 +51,11 @@ func unveil() {
 		log.Fatal(err)
 	}
 
+	err = unveilCmd("notify-send")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Block further unveil calls
 	err = unix.UnveilBlock()
 	if err != nil {
