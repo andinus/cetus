@@ -59,6 +59,10 @@ If you don't understand what this command does then don't run it. It doesn't
 download the binary, it will just print the steps to install cetus & you have to
 run those commands manually.
 *** v0.6.4
+*Note for OpenBSD users*: If you are using GNOME, Unity, LXDE or Pantheon then
+this version may not work, due to unveil. This probably has been fixed in
+v0.6.7, compile it.
+
 #+BEGIN_SRC sh
 curl -s https://tildegit.org/andinus/cetus/raw/tag/v0.6.4/scripts/install.sh | sh
 #+END_SRC
