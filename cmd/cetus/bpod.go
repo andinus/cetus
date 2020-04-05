@@ -73,6 +73,16 @@ func execBPOD() {
 		log.Println("bpod.go: failed to marshal res to body, not saving cache")
 	} else {
 		err = ioutil.WriteFile(file, []byte(body), 0644)
+		// Not being able to write to the cache file is a
+		// small error and the program shouldn't exit but
+		// should continue after printing the log so that the
+		// user can investigate it later.
+		if err != nil {
+			err = fmt.Errorf("%s%s\n%s",
+				"bpod.go: failed to write body to file: ", file,
+				err.Error())
+			log.Println(err)
+		}
 	}
 
 	// Send a desktop notification if notify flag was passed.
