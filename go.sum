@@ -1,2 +1,4 @@
 golang.org/x/sys v0.0.0-20200331124033-c3d80250170d h1:nc5K6ox/4lTFbMVSL9WRR81ixkcwXThoiF6yf+R9scA=
 golang.org/x/sys v0.0.0-20200331124033-c3d80250170d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+tildegit.org/andinus/lynx v0.1.0 h1:7YjyF8h7MBGKRgQZT0j0I3uHRPf3mI2GMiDujXVlLS0=
+tildegit.org/andinus/lynx v0.1.0/go.mod h1:/PCNkKwfJ7pb6ziHa76a4gYp1R9S1Ro4ANjQwzSpBIk=

@@ -3,12 +3,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"strings"
 
 	"golang.org/x/sys/unix"
 	"tildegit.org/andinus/cetus/cache"
+	"tildegit.org/andinus/lynx"
 )
 
 func main() {
@@ -17,41 +16,28 @@ func main() {
 }
 
 func unveil() {
-	unveilL := make(map[string]string)
+	paths := make(map[string]string)
 
-	// We unveil the whole cache directory.
-	err = unix.Unveil(cache.Dir(), "rwc")
+	paths[cache.Dir()] = "rwc"
+	paths["/dev/null"] = "rw" // required by feh
+	paths["/etc/resolv.conf"] = "r"
+
+	// ktrace output
+	paths["/usr/libexec/ld.so"] = "r"
+	paths["/var/run/ld.so.hints"] = "r"
+	paths["/usr/lib"] = "r"
+	paths["/dev/urandom"] = "r"
+	paths["/etc/hosts"] = "r"
+	paths["/etc/ssl"] = "r"
+
+	err := lynx.UnveilPaths(paths)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	unveilL["/dev/null"] = "rw" // required by feh
-	unveilL["/etc/resolv.conf"] = "r"
+	commands := []string{"feh", "gsettings", "pcmanfm", "notify-send"}
 
-	// ktrace output
-	unveilL["/usr/libexec/ld.so"] = "r"
-	unveilL["/var/run/ld.so.hints"] = "r"
-	unveilL["/usr/lib"] = "r"
-	unveilL["/dev/urandom"] = "r"
-	unveilL["/etc/hosts"] = "r"
-	unveilL["/etc/ssl"] = "r"
-
-	for k, v := range unveilL {
-		err = unix.Unveil(k, v)
-		if err != nil && err.Error() == "no such file or directory" {
-			log.Printf("WARN: Unveil failed on %s", k)
-		} else if err != nil {
-			log.Fatal(fmt.Sprintf("%s :: %s\n%s", k, v,
-				err.Error()))
-		}
-	}
-
-	err = unveilCmds([]string{
-		"feh",
-		"gsettings",
-		"pcmanfm",
-		"notify-send",
-	})
+	err = lynx.UnveilCommands(commands)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,22 +47,4 @@ func unveil() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-// unveilCmds will unveil commands.
-func unveilCmds(cmds []string) error {
-	pathList := strings.Split(getEnv("PATH", ""), ":")
-	// Unveil each command.
-	for _, cmd := range cmds {
-		for _, path := range pathList {
-			err = unix.Unveil(fmt.Sprintf("%s/%s", path, cmd), "rx")
-
-			if err != nil && err.Error() != "no such file or directory" {
-				return fmt.Errorf("%s\n%s",
-					cmd,
-					err.Error())
-			}
-		}
-	}
-	return nil
 }
