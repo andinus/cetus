@@ -54,7 +54,30 @@ func parseArgs() {
 
 	switch os.Args[2] {
 	case "apod", "nasa":
-		defDate := time.Now().UTC().Format("2006-01-02")
+		defDate := time.Now().UTC().
+			// Subtract 8 hours from UTC to ensure program
+			// doesn't fail. This still doesn't mean
+			// anything, I've emailed them asking about
+			// timezone on server but no response :(
+			//
+			// The server returns "400 Bad Request" when
+			// you request future date, so if I request
+			// 2020-04-25 on 2020-04-24 23:59 UTC it will
+			// return "400 Bad Request" but if I
+			// re-request it on 2020-04-25 00:04 UTC it
+			// returns "500 Internal Server Error", I
+			// think the API server runs on UTC but the
+			// program that is responsible for syncing the
+			// images is running on a different timezone,
+			// which is why it returns "500 Internal
+			// Server Error" instead of "400 Bad Request".
+			//
+			// Hopefully this should work, it will work if
+			// the program responsible for syncing images
+			// is in or before UTC-8.
+			Add(time.Duration(-8) * time.Hour).
+			Format("2006-01-02")
+
 		cetus.StringVar(&apodDate, "date", defDate, "Date of NASA APOD to retrieve")
 		cetus.Parse(os.Args[3:])
 
