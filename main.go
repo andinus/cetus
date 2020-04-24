@@ -40,6 +40,16 @@ func main() {
 }
 
 func initCetus() {
+	// We cannot use complex switches here so instead we unveil
+	// everything we need. This is bad but the other way will make
+	// the code too complex, we need a better structure for code.
+	// This also runs UnveilBlock, instead we could remove this
+	// unveil func & inline Unveil calls in other functions, this
+	// way we will only unveil when required.
+	//
+	// This method is still used because in earlier lynx version
+	// we had to manage build flags manually, so keeping
+	// everything in a single func made sense.
 	unveil()
 }
 
