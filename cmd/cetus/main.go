@@ -1,11 +1,8 @@
-// +build openbsd
-
 package main
 
 import (
 	"log"
 
-	"golang.org/x/sys/unix"
 	"tildegit.org/andinus/cetus/cache"
 	"tildegit.org/andinus/lynx"
 )
@@ -43,7 +40,7 @@ func unveil() {
 	}
 
 	// Block further unveil calls
-	err = unix.UnveilBlock()
+	err = lynx.UnveilBlock()
 	if err != nil {
 		log.Fatal(err)
 	}
