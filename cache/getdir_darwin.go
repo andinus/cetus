@@ -21,3 +21,10 @@ func GetDir() string {
 
 	return cetusCacheDir
 }
+
+// Dir returns "/dev/null", this is required because unveil func in
+// main.go calls it & it's useless on macOS anyways so we return
+// "/dev/null".
+func Dir() string {
+	return "/dev/null"
+}
