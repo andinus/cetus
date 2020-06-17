@@ -22,6 +22,7 @@ It supports /GNOME/, /Unity/, /LXDE/, /Pantheon/ & WM/DE similar to /i3wm/ (incl
 i3wm).
 
 *Tested on*:
+- OpenBSD 6.7
 - OpenBSD 6.6 with i3wm (with /unveil/)
 - Lubuntu 18.04 with LXDE
 - macOS Catalina 10.15.3
